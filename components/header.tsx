@@ -26,14 +26,14 @@ export const Header = () => {
           <ul className='flex items-center justify-between gap-6'>
             <div className='flex items-center gap-4'>
               <li>
-                <Button size='icon' asChild>
+                <Button size='icon-lg' asChild>
                   <Link href=''>
                     <Icon name='shared/cart' />
                   </Link>
                 </Button>
               </li>
               <li>
-                <Button size='icon' asChild>
+                <Button size='icon-lg' asChild>
                   <Link href=''>
                     <Icon name='shared/favourite' />
                   </Link>

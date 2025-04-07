@@ -3,6 +3,7 @@ import './globals.css';
 import { Nunito } from 'next/font/google';
 import { ReactNode } from 'react';
 import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,9 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ru'>
-      <body className={`antialiased ${nunito.className}`}>
+      <body
+        className={`antialiased ${nunito.className} flex min-h-dvh flex-col overflow-x-hidden bg-background`}
+      >
+        <div className='bg-background-secondary pointer-events-none fixed -right-[600px] -top-[230px] z-[-1] h-[1500px] w-[600px] -rotate-[30deg] xl:-right-[400px]' />
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
