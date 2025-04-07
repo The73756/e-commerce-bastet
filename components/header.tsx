@@ -3,14 +3,21 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
+import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
 
 export const Header = () => {
   return (
     <header className='bg-primary py-6'>
-      <div className='container flex flex-wrap justify-between gap-x-24 gap-y-6 max-md:flex-col md:items-center'>
+      <div className='container flex flex-wrap justify-between gap-x-24 gap-y-6 max-md:flex-col md:items-center md:pl-0'>
         <div className='flex flex-auto gap-x-5 gap-y-8 max-md:flex-col md:items-center'>
-          <Image width={159} height={36} alt='Логотип Bastet' src='/logo.svg' />
-          <label className='relative min-h-[45px] min-w-[300px] flex-1 md:min-h-16 min-[835px]:min-w-[640px]'>
+          <Image
+            width={159}
+            height={36}
+            alt='Логотип Bastet'
+            src='/logo.svg'
+            className='md:hidden'
+          />
+          <label className='relative min-h-[45px] min-w-[300px] flex-1 md:min-h-16 min-[920px]:min-w-[640px]'>
             <Input
               type='text'
               placeholder='Поиск...'
@@ -25,6 +32,9 @@ export const Header = () => {
         <nav className='flex-1'>
           <ul className='flex items-center justify-between gap-6'>
             <div className='flex items-center gap-4'>
+              <li className='md:hidden'>
+                <CustomSidebarTrigger />
+              </li>
               <li>
                 <Button size='icon-lg' asChild>
                   <Link href=''>
