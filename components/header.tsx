@@ -8,7 +8,7 @@ import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
 export const Header = () => {
   return (
     <header className='bg-primary py-6'>
-      <div className='container flex flex-wrap justify-between gap-x-24 gap-y-6 max-md:flex-col md:items-center md:pl-0'>
+      <div className='container flex flex-wrap justify-between gap-x-24 gap-y-6 max-lg:flex-col lg:items-center'>
         <div className='flex flex-auto gap-x-5 gap-y-8 max-md:flex-col md:items-center'>
           <Image
             width={159}
@@ -17,15 +17,15 @@ export const Header = () => {
             src='/logo.svg'
             className='md:hidden'
           />
-          <label className='relative min-h-[45px] min-w-[300px] flex-1 md:min-h-16 min-[920px]:min-w-[640px]'>
+          <label className='relative min-h-[45px] min-w-[300px] flex-1 md:min-h-16 lg:min-w-[640px]'>
             <Input
               type='text'
               placeholder='Поиск...'
-              className='text-text-dark absolute inset-0 h-full pl-14'
+              className='absolute inset-0 h-full pl-14 text-text-dark'
             />
             <Icon
               name='shared/search'
-              className='text-text absolute left-5 top-1/2 -translate-y-1/2 text-2xl'
+              className='absolute left-5 top-1/2 -translate-y-1/2 text-2xl text-text'
             />
           </label>
         </div>

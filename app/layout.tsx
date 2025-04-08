@@ -4,7 +4,7 @@ import { Nunito } from 'next/font/google';
 import { ReactNode } from 'react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
 
 export const metadata: Metadata = {
@@ -28,14 +28,16 @@ export default function RootLayout({
       <body
         className={`antialiased ${nunito.className} overflow-x-hidden bg-background`}
       >
-        <div className='bg-background-secondary pointer-events-none fixed -right-[600px] -top-[230px] z-[-1] h-[1500px] w-[600px] -rotate-[30deg] xl:-right-[400px]' />
+        <div className='pointer-events-none fixed -right-[600px] -top-[230px] z-[-1] h-[1500px] w-[600px] -rotate-[30deg] bg-background-secondary xl:-right-[400px]' />
         <SidebarProvider defaultOpen>
           <AppSidebar />
-          <div className='flex min-h-dvh w-full flex-col'>
+          <SidebarInset>
             <Header />
-            <main className='my-16'>{children}</main>
+            <main className='my-16 max-lg:max-w-[calc(100vw-16rem-16px)] max-md:max-w-full'>
+              {children}
+            </main>
             <Footer />
-          </div>
+          </SidebarInset>
         </SidebarProvider>
       </body>
     </html>

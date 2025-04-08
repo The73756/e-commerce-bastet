@@ -4,7 +4,7 @@ import { formatPrice } from '@/lib/format-price';
 
 export const CartButton = ({ price }: { price: number }) => {
   return (
-    <Button>
+    <Button className='w-full'>
       <span>{formatPrice(price)}</span>
       <Icon name='shared/cart' />
     </Button>
