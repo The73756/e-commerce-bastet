@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const items = [
   {
@@ -40,12 +41,14 @@ export function AppSidebar() {
   return (
     <Sidebar variant='inset' collapsible='offcanvas'>
       <SidebarHeader className='px-6 pb-10 pt-[2.25rem] text-background max-md:hidden'>
-        <Image width={159} height={36} alt='Логотип Bastet' src='/logo.svg' />
+        <Link href='/'>
+          <Image width={159} height={36} alt='Логотип Bastet' src='/logo.svg' />
+        </Link>
       </SidebarHeader>
       <SidebarContent className='mr-2 p-6 text-background md:py-0'>
         <SidebarGroup className='p-0'>
           <SidebarGroupLabel className='mb-2.5 pl-0 text-2xl font-bold text-background'>
-            Каталог
+            <Link href='/catalog'>Каталог</Link>
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className='flex flex-col gap-1.5'>
@@ -62,7 +65,14 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className='px-6 pt-4 text-background max-md:hidden'>
         <div className='flex flex-col gap-y-2 max-md:hidden'>
-          <Image width={159} height={36} alt='Логотип Bastet' src='/logo.svg' />
+          <Link href='/'>
+            <Image
+              width={159}
+              height={36}
+              alt='Логотип Bastet'
+              src='/logo.svg'
+            />
+          </Link>
           <p className='text-sm text-background'>© Все права защищены</p>
         </div>
       </SidebarFooter>

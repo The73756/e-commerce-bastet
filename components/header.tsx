@@ -7,16 +7,17 @@ import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
 
 export const Header = () => {
   return (
-    <header className='bg-primary py-6'>
+    <header className='z-[2] bg-primary py-6'>
       <div className='container flex flex-wrap justify-between gap-x-24 gap-y-6 max-lg:flex-col lg:items-center'>
         <div className='flex flex-auto gap-x-5 gap-y-8 max-md:flex-col md:items-center'>
-          <Image
-            width={159}
-            height={36}
-            alt='Логотип Bastet'
-            src='/logo.svg'
-            className='md:hidden'
-          />
+          <Link href='/' className='md:hidden'>
+            <Image
+              width={159}
+              height={36}
+              alt='Логотип Bastet'
+              src='/logo.svg'
+            />
+          </Link>
           <label className='relative min-h-[45px] min-w-[300px] flex-1 md:min-h-16 lg:min-w-[640px]'>
             <Input
               type='text'

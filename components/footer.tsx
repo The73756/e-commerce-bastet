@@ -5,10 +5,17 @@ import Link from 'next/link';
 
 export const Footer = () => {
   return (
-    <footer className='bg-primary mt-auto py-6'>
+    <footer className='z-[2] mt-auto bg-primary py-6'>
       <div className='container flex flex-wrap justify-between gap-x-6 gap-y-6 md:items-center'>
         <div className='flex flex-col items-center gap-2 md:hidden'>
-          <Image width={159} height={36} alt='Логотип Bastet' src='/logo.svg' />
+          <Link href='/'>
+            <Image
+              width={159}
+              height={36}
+              alt='Логотип Bastet'
+              src='/logo.svg'
+            />
+          </Link>
           <p className='text-sm text-background'>© Все права защищены</p>
         </div>
         <ul className='flex items-center justify-between gap-4 md:ml-auto'>
