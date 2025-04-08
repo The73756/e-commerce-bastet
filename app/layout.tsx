@@ -31,11 +31,11 @@ export default function RootLayout({
         <div className='bg-background-secondary pointer-events-none fixed -right-[600px] -top-[230px] z-[-1] h-[1500px] w-[600px] -rotate-[30deg] xl:-right-[400px]' />
         <SidebarProvider defaultOpen>
           <AppSidebar />
-          <main className='flex min-h-dvh w-full flex-col'>
+          <div className='flex min-h-dvh w-full flex-col'>
             <Header />
-            {children}
+            <main className='my-16'>{children}</main>
             <Footer />
-          </main>
+          </div>
         </SidebarProvider>
       </body>
     </html>

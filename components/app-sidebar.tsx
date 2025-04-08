@@ -12,7 +12,6 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
-// Menu items.
 const items = [
   {
     title: 'Category 11',
