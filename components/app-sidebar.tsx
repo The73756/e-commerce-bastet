@@ -40,7 +40,7 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar variant='inset' collapsible='offcanvas'>
-      <SidebarHeader className='px-6 pb-10 pt-[2.25rem] text-background max-md:hidden'>
+      <SidebarHeader className='px-6 pb-10 pt-7 text-background max-md:hidden'>
         <Link href='/'>
           <Image width={159} height={36} alt='Логотип Bastet' src='/logo.svg' />
         </Link>

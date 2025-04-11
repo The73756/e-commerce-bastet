@@ -7,7 +7,7 @@ import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
 
 export const Header = () => {
   return (
-    <header className='z-[2] bg-primary py-6'>
+    <header className='top-0 z-10 bg-primary py-6 md:sticky'>
       <div className='container flex flex-wrap justify-between gap-x-24 gap-y-6 max-lg:flex-col lg:items-center'>
         <div className='flex flex-auto gap-x-5 gap-y-8 max-md:flex-col md:items-center'>
           <Link href='/' className='md:hidden'>
