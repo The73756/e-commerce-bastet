@@ -30,11 +30,11 @@ export default function RootLayout({
         <Header />
         <SidebarProvider defaultOpen>
           <CatalogSidebar />
-          <CustomSidebarTrigger className='absolute right-6 top-7 z-10 md:hidden' />
+          <CustomSidebarTrigger className='fixed right-6 top-7 z-10 md:hidden' />
           <SidebarInset>
-            <main className='rounded-2xl bg-white py-5 max-md:max-w-full md:max-w-[calc(100vw-29rem-10px)]'>
+            <div className='flex-1 rounded-2xl bg-white p-4 py-5 max-md:max-w-full md:max-w-[calc(100vw-29rem-8px)]'>
               {children}
-            </main>
+            </div>
             <CartSidebar />
           </SidebarInset>
         </SidebarProvider>
