@@ -12,7 +12,7 @@ const brands = [
 
 export const BrandFilter = () => {
   return (
-    <ToggleGroup type='multiple' className='mb-12'>
+    <ToggleGroup type='multiple'>
       {brands.map((brand) => (
         <ToggleGroupItem key={brand.id} value={brand.name}>
           {brand.name}

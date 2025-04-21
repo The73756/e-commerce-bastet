@@ -9,10 +9,10 @@ import {
 export const SortSelect = () => {
   return (
     <Select>
-      <SelectTrigger className='mb-5 w-[250px]'>
+      <SelectTrigger className='w-[250px] p-0'>
         <SelectValue placeholder='Сортировка' />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className='text-sm'>
         <SelectItem value='1'>По алфавиту А-Я</SelectItem>
         <SelectItem value='2'>По алфавиту Я-А</SelectItem>
         <SelectItem value='3'>По убыванию цены</SelectItem>

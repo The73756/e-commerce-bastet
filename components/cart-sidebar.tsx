@@ -6,7 +6,10 @@ export function CartSidebar() {
   const auth = false;
 
   return (
-    <div className='fixed bottom-0 right-0 top-[88px] z-10 w-[228px] p-2 max-md:hidden'>
+    <div
+      id='basket'
+      className='fixed bottom-0 right-0 top-[88px] z-10 w-[228px] p-2 max-md:hidden'
+    >
       <div className='relative h-full overflow-hidden rounded-2xl bg-white p-4'>
         {auth ? (
           <CustomTitle

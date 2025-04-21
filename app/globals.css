@@ -108,4 +108,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  body[data-scroll-locked="1"] #basket {
+    margin-right: var(--removed-body-scroll-bar-size);
+  }
 }

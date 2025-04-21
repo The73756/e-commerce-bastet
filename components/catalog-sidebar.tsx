@@ -71,7 +71,7 @@ export function CatalogSidebar() {
                       <ul className='flex flex-col gap-1 pl-5 pt-1'>
                         {brands.map((brand) => (
                           <li key={brand.id}>
-                            <Link className='text-sm' href=''>
+                            <Link className='text-sm' href='/catalog'>
                               {brand.name}
                             </Link>
                           </li>
