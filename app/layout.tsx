@@ -32,7 +32,7 @@ export default function RootLayout({
           <CatalogSidebar />
           <CustomSidebarTrigger className='fixed right-6 top-7 z-10 md:hidden' />
           <SidebarInset>
-            <div className='flex-1 rounded-2xl bg-white p-4 py-5 max-md:max-w-full md:max-w-[calc(100vw-29rem-8px)]'>
+            <div className='flex-1 rounded-2xl bg-white p-4 max-md:mx-2.5 max-md:mt-2.5 max-md:max-w-full md:max-w-[calc(100vw-29rem-8px)]'>
               {children}
             </div>
             <CartSidebar />

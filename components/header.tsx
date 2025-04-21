@@ -25,12 +25,15 @@ export const Header = () => {
         <nav>
           <ul className='flex items-center justify-between gap-2.5'>
             {/*<li className='md:hidden'><CustomSidebarTrigger /></li>*/}
+            <li className='md:hidden'>
+              <Button size='icon' className='h-10 w-10' asChild>
+                <Link href=''>
+                  <Icon name='shared/cart' />
+                </Link>
+              </Button>
+            </li>
             <li>
-              <Button
-                size='lg'
-                className='h-[40px] py-2.5 lg:w-[194px]'
-                asChild
-              >
+              <Button size='lg' className='h-10 py-2.5 lg:w-[194px]' asChild>
                 <Link href=''>Войти</Link>
               </Button>
             </li>

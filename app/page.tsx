@@ -7,13 +7,13 @@ export default function Home() {
     <div className='flex flex-col gap-5'>
       <div className='flex h-[260px] justify-end rounded-2xl border border-b-slate-100 bg-[url(/banner-bg.png)] bg-center'>
         <div className='shadow-custom relative flex w-1/2 min-w-64 items-center justify-center rounded-2xl bg-white p-2'>
-          <div className='bg-blue absolute left-2.5 top-2.5 rounded-xl px-1.5 py-1 text-base font-semibold text-white'>
+          <div className='bg-blue absolute left-2.5 top-2.5 rounded-xl px-1.5 py-1 text-sm font-semibold text-white md:text-base'>
             на 1-ый заказ
           </div>
           <h2 className='text-blue text-4xl font-bold md:text-6xl'>-15%</h2>
           <Button
             size='lg'
-            className='absolute bottom-5 left-1/2 h-[40px] w-[212px] max-w-full -translate-x-1/2'
+            className='absolute bottom-5 left-1/2 h-[40px] w-[calc(100%-20px)] -translate-x-1/2 md:w-[212px]'
           >
             В каталог
           </Button>
