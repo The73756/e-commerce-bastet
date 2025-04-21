@@ -1,17 +1,18 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import Link from 'next/link';
+import { CustomTitle } from '@/components/ui/custom-title';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 const items = [
   {
@@ -37,45 +38,53 @@ const items = [
   },
 ];
 
+const brands = [
+  { id: 1, name: 'Brand 1' },
+  { id: 2, name: 'Brand 2' },
+  { id: 3, name: 'Brand 3' },
+  { id: 4, name: 'Brand 4' },
+];
+
 export function CatalogSidebar() {
   return (
     <Sidebar variant='inset' collapsible='offcanvas'>
-      <SidebarHeader className='px-6 pb-10 pt-7 text-background max-md:hidden'>
-        <Link href='/'>
-          <Image width={159} height={36} alt='Логотип Bastet' src='/logo.svg' />
-        </Link>
-      </SidebarHeader>
-      <SidebarContent className='mr-2 p-6 text-background md:py-0'>
-        <SidebarGroup className='p-0'>
-          <SidebarGroupLabel className='mb-2.5 pl-0 text-2xl font-bold text-background'>
-            <Link href='/catalog'>Каталог</Link>
-          </SidebarGroupLabel>
+      <SidebarContent className='h-full text-background'>
+        <SidebarGroup className='px-4 py-5'>
+          <CustomTitle
+            className='mb-5'
+            title={<Link href='/catalog'>Каталог</Link>}
+            desc={`${items.length} категорий`}
+          />
           <SidebarGroupContent>
-            <SidebarMenu className='flex flex-col gap-1.5'>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <Button variant='link' size='link'>
-                    {item.title}
-                  </Button>
-                </SidebarMenuItem>
-              ))}
+            <SidebarMenu>
+              <Accordion
+                type='single'
+                collapsible
+                className='text-blue flex flex-col gap-2.5 font-medium'
+              >
+                {items.map((item) => (
+                  <AccordionItem key={item.title} value={item.title}>
+                    <AccordionTrigger className='p-0 text-base'>
+                      {item.title}
+                    </AccordionTrigger>
+                    <AccordionContent className='p-0'>
+                      <ul className='flex flex-col gap-1 pl-5 pt-1'>
+                        {brands.map((brand) => (
+                          <li key={brand.id}>
+                            <Link className='text-sm' href=''>
+                              {brand.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className='px-6 pt-4 text-background max-md:hidden'>
-        <div className='flex flex-col gap-y-2 max-md:hidden'>
-          <Link href='/'>
-            <Image
-              width={159}
-              height={36}
-              alt='Логотип Bastet'
-              src='/logo.svg'
-            />
-          </Link>
-          <p className='text-sm text-background'>© Все права защищены</p>
-        </div>
-      </SidebarFooter>
     </Sidebar>
   );
 }

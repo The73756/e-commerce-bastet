@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import { Header } from '@/components/header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { CatalogSidebar } from '@/components/catalog-sidebar';
+import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -28,8 +29,9 @@ export default function RootLayout({
         <Header />
         <SidebarProvider defaultOpen>
           <CatalogSidebar />
+          <CustomSidebarTrigger className='absolute right-6 top-7 z-10 md:hidden' />
           <SidebarInset>
-            <main className='z-[2] my-16 max-lg:max-w-[calc(100vw-14.25rem-16px)] max-md:max-w-full'>
+            <main className='rounded-2xl bg-white py-5 max-lg:max-w-[calc(100vw-14.25rem-24px)] max-md:max-w-full'>
               {children}
             </main>
           </SidebarInset>

@@ -3,11 +3,16 @@ import { useSidebar } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/shared/icon';
 
-export function CustomSidebarTrigger() {
+export function CustomSidebarTrigger({ className }: { className?: string }) {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <Button size='icon-lg' onClick={toggleSidebar}>
+    <Button
+      size='icon'
+      variant='ghost'
+      className={className ? className : ''}
+      onClick={toggleSidebar}
+    >
       <Icon name='shared/menu' />
     </Button>
   );
