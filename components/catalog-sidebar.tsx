@@ -37,7 +37,7 @@ const items = [
   },
 ];
 
-export function AppSidebar() {
+export function CatalogSidebar() {
   return (
     <Sidebar variant='inset' collapsible='offcanvas'>
       <SidebarHeader className='px-6 pb-10 pt-7 text-background max-md:hidden'>

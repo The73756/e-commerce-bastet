@@ -3,56 +3,34 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
-import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
+// import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
 
 export const Header = () => {
   return (
-    <header className='top-0 z-10 bg-primary py-6 md:sticky'>
-      <div className='container flex flex-wrap justify-between gap-x-24 gap-y-6 max-lg:flex-col lg:items-center'>
-        <div className='flex flex-auto gap-x-5 gap-y-8 max-md:flex-col md:items-center'>
-          <Link href='/' className='md:hidden'>
-            <Image
-              width={159}
-              height={36}
-              alt='Логотип Bastet'
-              src='/logo.svg'
-            />
-          </Link>
-          <label className='relative min-h-[45px] min-w-[300px] flex-1 md:min-h-16 lg:min-w-[640px]'>
-            <Input
-              type='text'
-              placeholder='Поиск...'
-              className='absolute inset-0 h-full pl-14 text-text-dark'
-            />
-            <Icon
-              name='shared/search'
-              className='absolute left-5 top-1/2 -translate-y-1/2 text-2xl text-text'
-            />
-          </label>
-        </div>
-        <nav className='flex-1'>
-          <ul className='flex items-center justify-between gap-6'>
-            <div className='flex items-center gap-4'>
-              <li className='md:hidden'>
-                <CustomSidebarTrigger />
-              </li>
-              <li>
-                <Button size='icon-lg' asChild>
-                  <Link href=''>
-                    <Icon name='shared/cart' />
-                  </Link>
-                </Button>
-              </li>
-              <li>
-                <Button size='icon-lg' asChild>
-                  <Link href=''>
-                    <Icon name='shared/favourite' />
-                  </Link>
-                </Button>
-              </li>
-            </div>
+    <header className='py-5.5 sticky top-0 z-10 mx-2.5 flex justify-between gap-x-24 gap-y-6 rounded-b-2xl bg-white px-4 py-6 max-md:flex-col md:items-center'>
+      <Link href='/'>
+        <Image width={120} height={40} alt='Логотип Bastet' src='/logo.svg' />
+      </Link>
+      <div className='flex flex-auto items-center gap-2.5 max-md:flex-wrap'>
+        <label className='relative min-h-[40px] min-w-[200px] flex-1 lg:min-w-[500px]'>
+          <Input
+            placeholder='Поиск...'
+            className='absolute inset-0 h-full pl-14'
+          />
+          <Icon
+            name='shared/search'
+            className='text-grey-dark absolute left-5 top-1/2 -translate-y-1/2 text-2xl'
+          />
+        </label>
+        <nav>
+          <ul className='flex items-center justify-between gap-2.5'>
+            {/*<li className='md:hidden'><CustomSidebarTrigger /></li>*/}
             <li>
-              <Button size='lg' className='rounded-2xl py-2.5' asChild>
+              <Button
+                size='lg'
+                className='h-[40px] py-2.5 lg:w-[14.25rem]'
+                asChild
+              >
                 <Link href=''>Войти</Link>
               </Button>
             </li>

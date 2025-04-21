@@ -3,9 +3,8 @@ import './globals.css';
 import { Nunito } from 'next/font/google';
 import { ReactNode } from 'react';
 import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/app-sidebar';
+import { CatalogSidebar } from '@/components/catalog-sidebar';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -25,18 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ru'>
-      <body
-        className={`antialiased ${nunito.className} overflow-x-hidden bg-background`}
-      >
+      <body className={`antialiased ${nunito.className} bg-blue`}>
+        <Header />
         <SidebarProvider defaultOpen>
-          <AppSidebar />
+          <CatalogSidebar />
           <SidebarInset>
-            <div className='pointer-events-none fixed -right-[500px] -top-[400px] z-0 h-[1500px] w-[600px] -rotate-[30deg] bg-background-secondary xl:-right-[400px]' />
-            <Header />
-            <main className='z-[2] my-16 max-lg:max-w-[calc(100vw-16rem-16px)] max-md:max-w-full'>
+            <main className='z-[2] my-16 max-lg:max-w-[calc(100vw-14.25rem-16px)] max-md:max-w-full'>
               {children}
             </main>
-            <Footer />
           </SidebarInset>
         </SidebarProvider>
       </body>
