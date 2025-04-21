@@ -28,7 +28,7 @@ export const Header = () => {
             <li>
               <Button
                 size='lg'
-                className='h-[40px] py-2.5 lg:w-[14.25rem]'
+                className='h-[40px] py-2.5 lg:w-[194px]'
                 asChild
               >
                 <Link href=''>Войти</Link>

@@ -49,7 +49,7 @@ export function CatalogSidebar() {
   return (
     <Sidebar variant='inset' collapsible='offcanvas'>
       <SidebarContent className='h-full text-background'>
-        <SidebarGroup className='px-4 py-5'>
+        <SidebarGroup className='p-4'>
           <CustomTitle
             className='mb-5'
             title={<Link href='/catalog'>Каталог</Link>}

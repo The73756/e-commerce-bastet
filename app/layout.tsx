@@ -6,6 +6,7 @@ import { Header } from '@/components/header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { CatalogSidebar } from '@/components/catalog-sidebar';
 import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
+import { CartSidebar } from '@/components/cart-sidebar';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -31,9 +32,10 @@ export default function RootLayout({
           <CatalogSidebar />
           <CustomSidebarTrigger className='absolute right-6 top-7 z-10 md:hidden' />
           <SidebarInset>
-            <main className='rounded-2xl bg-white py-5 max-lg:max-w-[calc(100vw-14.25rem-24px)] max-md:max-w-full'>
+            <main className='rounded-2xl bg-white py-5 max-md:max-w-full md:max-w-[calc(100vw-29rem-10px)]'>
               {children}
             </main>
+            <CartSidebar />
           </SidebarInset>
         </SidebarProvider>
       </body>

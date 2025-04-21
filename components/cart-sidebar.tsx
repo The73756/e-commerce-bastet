@@ -1,81 +1,36 @@
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-} from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import Link from 'next/link';
-
-const items = [
-  {
-    title: 'Category 11',
-  },
-  {
-    title: 'Category 12',
-  },
-  {
-    title: 'Category 13',
-  },
-  {
-    title: 'Category 14',
-  },
-  {
-    title: 'Category 15',
-  },
-  {
-    title: 'Category 16',
-  },
-  {
-    title: 'Category 17',
-  },
-];
+import { CustomTitle } from '@/components/ui/custom-title';
 
 export function CartSidebar() {
+  const auth = false;
+
   return (
-    <Sidebar side='right' variant='inset' collapsible='offcanvas'>
-      <SidebarHeader className='px-6 pb-10 pt-7 text-background max-md:hidden'>
-        <Link href='/'>
-          <Image width={159} height={36} alt='Логотип Bastet' src='/logo.svg' />
-        </Link>
-      </SidebarHeader>
-      <SidebarContent className='mr-2 p-6 text-background md:py-0'>
-        <SidebarGroup className='p-0'>
-          <SidebarGroupLabel className='mb-2.5 pl-0 text-2xl font-bold text-background'>
-            <Link href='/catalog'>Каталог</Link>
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu className='flex flex-col gap-1.5'>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <Button variant='link' size='link'>
-                    {item.title}
-                  </Button>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-      <SidebarFooter className='px-6 pt-4 text-background max-md:hidden'>
-        <div className='flex flex-col gap-y-2 max-md:hidden'>
-          <Link href='/'>
-            <Image
-              width={159}
-              height={36}
-              alt='Логотип Bastet'
-              src='/logo.svg'
-            />
-          </Link>
-          <p className='text-sm text-background'>© Все права защищены</p>
-        </div>
-      </SidebarFooter>
-    </Sidebar>
+    <div className='fixed bottom-0 right-0 top-[88px] z-10 w-[228px] p-2'>
+      <div className='relative h-full overflow-hidden rounded-2xl bg-white p-4'>
+        {auth ? (
+          <CustomTitle
+            className='mb-5'
+            title={<Link href='/'>Корзина</Link>}
+            desc={`5 товаров`}
+          />
+        ) : (
+          <div className='flex h-full items-center justify-center'>
+            <div className='text-blue shadow-custom absolute top-0 w-full rounded-2xl p-4 text-base font-semibold'>
+              Bastet - лучший выбор в мире электроники
+            </div>
+            <p className='text-grey w-full text-center text-sm font-semibold'>
+              Корзина доступна только авторизованным пользователям
+            </p>
+            <div className='text-grey-dark shadow-custom absolute bottom-0 flex w-full flex-col gap-4 rounded-2xl p-4 text-sm font-semibold'>
+              <h4>Войдите, чтобы положить товар в корзину</h4>
+              <Button size='lg' className='h-[40px] w-full py-2.5' asChild>
+                <Link href=''>Войти</Link>
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
