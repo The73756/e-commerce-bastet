@@ -6,7 +6,7 @@ import { ProductReviewList } from '@/components/product-review-list';
 export default function Page() {
   return (
     <div className='flex flex-col gap-10'>
-      <div className='flex flex-wrap gap-5 max-md:flex-col'>
+      <div className='flex gap-5 max-lg:flex-col'>
         <ProductImages />
         <div className='flex flex-col gap-10 md:gap-8'>
           <MainProductInfo />

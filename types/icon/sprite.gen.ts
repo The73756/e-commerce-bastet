@@ -21,6 +21,7 @@ export interface SpritesMap {
     | 'network'
     | 'phone'
     | 'plus'
+    | 'rating'
     | 'right'
     | 'search'
     | 'send'
@@ -154,6 +155,11 @@ export const SPRITES_META: {
         viewBox: '0 0 24 24',
         width: 24,
         height: 24,
+      },
+      rating: {
+        viewBox: '0 0 10 11',
+        width: 10,
+        height: 11,
       },
       right: {
         viewBox: '0 0 24 24',

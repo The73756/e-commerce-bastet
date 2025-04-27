@@ -21,7 +21,7 @@ export const ProductImages = () => {
 
   return (
     <div className='flex flex-col gap-2.5'>
-      <div className='flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-[#EDEDED]'>
+      <div className='flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-[#EDEDED] max-lg:max-h-[400px]'>
         <Image src={images[active]} alt='Product' width={332} height={332} />
       </div>
       <Carousel opts={{ align: 'start' }}>
