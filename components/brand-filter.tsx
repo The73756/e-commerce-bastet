@@ -1,13 +1,10 @@
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 const brands = [
-  { id: 1, name: 'Brand 1' },
-  { id: 2, name: 'Brand 2' },
-  { id: 3, name: 'Brand 3' },
-  { id: 4, name: 'Brand 4' },
-  { id: 5, name: 'Brand 5' },
-  { id: 6, name: 'Brand 6' },
-  { id: 7, name: 'Brand 7' },
+  { id: 1, name: 'Samsung' },
+  { id: 2, name: 'Apple' },
+  { id: 3, name: 'Asus' },
+  { id: 4, name: 'Xiaomi' },
 ];
 
 export const BrandFilter = () => {
