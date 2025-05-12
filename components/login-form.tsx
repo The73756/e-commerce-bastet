@@ -2,6 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -36,7 +37,7 @@ const formSchema = z.object({
     }),
 });
 
-export function LoginForm() {
+export function LoginForm({ setOpen }: { setOpen: (open: boolean) => void }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,16 +46,16 @@ export function LoginForm() {
     },
   });
   const login = useUserStore((state) => state.login);
-  const error = useUserStore((state) => state.error);
-  const isAuth = useUserStore((state) => state.isAuth);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    await login(values);
-    if (isAuth) {
+    const { success, data, error } = await login(values);
+
+    if (success && data) {
+      setOpen(false);
       form.reset();
+      toast(`Вы авторизовались как ${data.user.surname} ${data.user.name}`);
     }
-    if (error) console.log(error);
+    if (error) toast(error.message);
   }
 
   return (

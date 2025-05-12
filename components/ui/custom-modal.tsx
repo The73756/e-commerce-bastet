@@ -12,11 +12,19 @@ interface Props {
   trigger: string | ReactNode;
   title: string;
   content: ReactNode;
+  open?: boolean;
+  setOpen?: (open: boolean) => void;
 }
 
-export const CustomModal = ({ trigger, title, content }: Props) => {
+export const CustomModal = ({
+  trigger,
+  title,
+  content,
+  open,
+  setOpen,
+}: Props) => {
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild={typeof trigger !== 'string'}>
         {trigger}
       </DialogTrigger>

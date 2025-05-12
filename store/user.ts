@@ -1,8 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { User } from '@/types/user';
-import { apiInstance } from '@/api/api-instance';
+import { apiInstance, ApiReturn } from '@/api/api-instance';
 import { deleteCookie, setCookie } from '@/lib/cookie';
+
+interface AuthResponse {
+  token: string;
+  user: User;
+}
 
 interface UserStore {
   user: User | null;
@@ -11,13 +16,21 @@ interface UserStore {
   error: string | null;
   token: string | null;
 
-  registration: (userData: Omit<User, 'id' | 'role'>) => Promise<void>;
+  registration: (
+    userData: Omit<User, 'id' | 'role'>,
+  ) => Promise<ApiReturn<AuthResponse>>;
 
-  login: (credentials: { email: string; password: string }) => Promise<void>;
-  checkAuth: () => Promise<void>;
+  login: (credentials: {
+    email: string;
+    password: string;
+  }) => Promise<ApiReturn<AuthResponse>>;
+  checkAuth: () => Promise<ApiReturn<AuthResponse>>;
   logout: () => void;
-  updateUser: (id: number, updateData: Partial<User>) => Promise<void>;
-  deleteUser: (id: number) => Promise<void>;
+  updateUser: (
+    id: number,
+    updateData: Partial<User>,
+  ) => Promise<ApiReturn<AuthResponse>>;
+  deleteUser: (id: number) => Promise<Omit<ApiReturn<AuthResponse>, 'data'>>;
 
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
@@ -34,82 +47,62 @@ export const useUserStore = create<UserStore>()(
       token: null,
 
       registration: async (userData) => {
-        try {
-          set({ isLoading: true, error: null });
-          const { success, data, error } = await apiInstance<{
-            token: string;
-            user: User;
-          }>('/user/registration', {
+        set({ isLoading: true, error: null });
+        const { success, data, error } = await apiInstance<AuthResponse>(
+          '/user/registration',
+          {
             method: 'POST',
             body: userData,
-          });
-          if (success && data) {
-            set({ user: data.user, isAuth: true });
-            await setCookie('token', data.token);
-          }
-          if (error) {
-            set({
-              error: error.message,
-            });
-          }
-        } catch (err) {
-          set({ error: err instanceof Error ? err.message : 'failed' });
-        } finally {
-          set({ isLoading: false });
+          },
+        );
+
+        if (success && data) {
+          await setCookie('token', data.token);
+          set({ isLoading: false, user: data.user, isAuth: true });
+          return { success, data, error };
         }
+
+        set({ error: error?.message, isLoading: false });
+        return { success, data, error };
       },
 
       login: async ({ email, password }) => {
-        try {
-          set({ isLoading: true, error: null });
-          const { success, data, error } = await apiInstance<{
-            token: string;
-            user: User;
-          }>('/user/login', {
+        set({ isLoading: true, error: null });
+        const { success, data, error } = await apiInstance<AuthResponse>(
+          '/user/login',
+          {
             method: 'POST',
             body: { email, password },
-          });
-          if (success && data) {
-            set({ user: data.user, isAuth: true });
-            await setCookie('token', data.token);
-          }
-          if (error) {
-            set({
-              error: error.message,
-            });
-          }
-        } catch (err) {
-          set({ error: err instanceof Error ? err.message : 'Login failed' });
-        } finally {
-          set({ isLoading: false });
+          },
+        );
+
+        if (success && data) {
+          await setCookie('token', data.token);
+          set({ isLoading: false, user: data.user, isAuth: true });
+          return { success, data, error };
         }
+
+        set({ error: error?.message, isLoading: false });
+        return { success, data, error };
       },
 
       checkAuth: async () => {
-        try {
-          set({ isLoading: true, error: null });
-
-          const { success, data, error } = await apiInstance<{
-            token: string;
-            user: User;
-          }>('/user/auth', {
+        set({ isLoading: true, error: null });
+        const { success, data, error } = await apiInstance<AuthResponse>(
+          '/user/auth',
+          {
             method: 'GET',
-          });
+          },
+        );
 
-          if (success && data) {
-            set({ user: data.user, isAuth: true });
-            await setCookie('token', data.token);
-          }
-          if (error) {
-            set({
-              error: error.message,
-            });
-          }
-        } catch (err) {
-          set({ error: err instanceof Error ? err.message : 'failed' });
-        } finally {
-          set({ isLoading: false });
+        if (success && data) {
+          await setCookie('token', data.token);
+          set({ isLoading: false, user: data.user, isAuth: true });
+          return { success, data, error };
         }
+
+        set({ error: error?.message, isLoading: false });
+        return { success, data, error };
       },
 
       logout: async () => {
@@ -118,54 +111,42 @@ export const useUserStore = create<UserStore>()(
       },
 
       updateUser: async (id, updateData) => {
-        try {
-          set({ isLoading: true, error: null });
-          const { success, data, error } = await apiInstance<{
-            token: string;
-            user: User;
-          }>(`/user/${id}`, {
+        set({ isLoading: true, error: null });
+        const { success, data, error } = await apiInstance<AuthResponse>(
+          `/user/${id}`,
+          {
             method: 'PATCH',
             body: updateData,
-          });
-          if (success && data) {
-            set({ user: data.user, isAuth: true });
-            await setCookie('token', data.token);
-          }
-          if (error) {
-            set({
-              error: error.message,
-            });
-          }
-        } catch (err) {
-          set({ error: err instanceof Error ? err.message : 'failed' });
-        } finally {
-          set({ isLoading: false });
+          },
+        );
+
+        if (success && data) {
+          await setCookie('token', data.token);
+          set({ isLoading: false, user: data.user, isAuth: true });
+          return { success, data, error };
         }
+
+        set({ error: error?.message, isLoading: false });
+        return { success, data, error };
       },
 
       deleteUser: async (id) => {
-        try {
-          set({ isLoading: true, error: null });
-          const { success, error } = await apiInstance<{
-            token: string;
-            user: User;
-          }>(`/user/${id}`, {
+        set({ isLoading: true, error: null });
+        const { success, error } = await apiInstance<AuthResponse>(
+          `/user/${id}`,
+          {
             method: 'DELETE',
-          });
-          if (success) {
-            set({ user: null, isAuth: false });
-            await deleteCookie('token');
-          }
-          if (error) {
-            set({
-              error: error.message,
-            });
-          }
-        } catch (err) {
-          set({ error: err instanceof Error ? err.message : 'failed' });
-        } finally {
-          set({ isLoading: false });
+          },
+        );
+
+        if (success) {
+          set({ isLoading: false, user: null, isAuth: false });
+          await deleteCookie('token');
+          return { success, error };
         }
+
+        set({ error: error?.message, isLoading: false });
+        return { success, error };
       },
 
       setLoading: (isLoading) => set({ isLoading }),

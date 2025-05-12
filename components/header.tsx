@@ -1,3 +1,4 @@
+'use client';
 import { Icon } from '@/components/shared/icon';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -5,9 +6,11 @@ import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { CustomModal } from '@/components/ui/custom-modal';
 import { LoginForm } from '@/components/login-form';
-// import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
+import { useState } from 'react';
 
 export const Header = () => {
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+
   return (
     <header className='py-5.5 sticky top-0 z-10 mx-2.5 flex justify-between gap-x-24 gap-y-6 rounded-b-2xl bg-white px-4 py-6 max-md:flex-col md:items-center'>
       <Link href='/'>
@@ -26,7 +29,6 @@ export const Header = () => {
         </label>
         <nav>
           <ul className='flex items-center justify-between gap-2.5'>
-            {/*<li className='md:hidden'><CustomSidebarTrigger /></li>*/}
             <li className='md:hidden'>
               <Button size='icon' className='h-10 w-10' asChild>
                 <Link href=''>
@@ -36,13 +38,15 @@ export const Header = () => {
             </li>
             <li>
               <CustomModal
+                open={openLoginModal}
+                setOpen={setOpenLoginModal}
                 trigger={
                   <Button size='lg' className='h-10 py-2.5 lg:w-[194px]'>
                     Войти
                   </Button>
                 }
                 title='Авторизация'
-                content={<LoginForm />}
+                content={<LoginForm setOpen={setOpenLoginModal} />}
               />
             </li>
           </ul>
