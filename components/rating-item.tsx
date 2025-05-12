@@ -5,7 +5,7 @@ export const RatingItem = ({
   size,
   className,
 }: {
-  rating: { rate: number };
+  rating: number;
   size: 'sm' | 'lg';
   className?: string;
 }) => {
@@ -17,7 +17,7 @@ export const RatingItem = ({
         name='shared/rating'
         className={`text-yellow-300 ${size === 'sm' ? 'text-xs' : 'text-base'}`}
       />
-      <span>{rating.rate}</span>
+      <span>{rating}</span>
     </div>
   );
 };

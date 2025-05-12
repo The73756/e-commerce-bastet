@@ -10,6 +10,11 @@ export type Product = {
   tagId: number;
   createdAt?: Date;
   updatedAt?: Date;
+
+  tag: TypeBrandTag;
+  brand: TypeBrandTag;
+  type: TypeBrandTag;
+  photos: ProductPhoto[];
 };
 
 export type TypeBrandTag = {

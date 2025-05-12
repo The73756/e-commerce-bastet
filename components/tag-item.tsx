@@ -1,9 +1,11 @@
+import { TypeBrandTag } from '@/types/product';
+
 export const TagItem = ({
   tag,
   size,
   className,
 }: {
-  tag: { name: string };
+  tag: TypeBrandTag;
   size: 'sm' | 'lg';
   className?: string;
 }) => {
