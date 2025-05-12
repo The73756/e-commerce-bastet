@@ -1,4 +1,3 @@
-import { ProductCard } from '@/components/product-card';
 // import {
 //   Pagination,
 //   PaginationContent,
@@ -10,20 +9,20 @@ import { ProductCard } from '@/components/product-card';
 import { BrandFilter } from '@/components/brand-filter';
 import { SortSelect } from '@/components/sort-select';
 import { CustomTitle } from '@/components/ui/custom-title';
+import { CatalogProductList } from '@/components/catalog-product-list';
+import { getAllProducts } from '@/api/product';
 
-export default function Page() {
+export default async function Page() {
+  const allProductResponse = await getAllProducts();
+
   return (
     <div className='flex flex-col gap-5'>
       <CustomTitle title='Смартфоны' />
       <SortSelect />
       <BrandFilter />
-      <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5'>
-        {[
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-        ].map((prod) => (
-          <ProductCard key={prod} />
-        ))}
-      </div>
+      {allProductResponse.data && (
+        <CatalogProductList productData={allProductResponse.data} />
+      )}
       {/*<Pagination>*/}
       {/*  <PaginationContent>*/}
       {/*    <PaginationItem>*/}

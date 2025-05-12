@@ -10,7 +10,7 @@ export const getAllProducts = async (params = {}) => {
     }, new URLSearchParams());
 
   return await apiInstance<ProductResponse>(
-    `product${queryString.toString()}`,
+    `product?${queryString.toString()}`,
     {
       method: 'GET',
     },

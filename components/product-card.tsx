@@ -12,41 +12,43 @@ export const ProductCard = ({ product }: { product: Product }) => {
     <div className='relative overflow-hidden rounded-xl bg-white shadow-custom'>
       <div className='relative flex min-h-[110px] items-center justify-center rounded-xl border-b border-slate-100 bg-white'>
         <Image
-          src={`${API_URL?.replace('api/', '')}/${product.photos[0].url}`}
-          alt={product.name}
+          src={`${API_URL?.replace('api/', '')}/${product?.photos[0].url}`}
+          alt={product?.name}
           width={110}
           height={110}
           className='h-full object-contain'
         />
-        {product.tag && (
+        {product?.tag && (
           <TagItem
-            tag={product.tag}
+            tag={product?.tag}
             size='sm'
             className='absolute left-1.5 top-1.5'
           />
         )}
         <RatingItem
-          rating={product.rating}
+          rating={product?.rating}
           size='sm'
           className='absolute bottom-1.5 left-1.5'
         />
       </div>
       <div className='flex items-center justify-between gap-2 px-2.5 pt-1.5'>
         <span
-          className={`${product.quantity > 0 ? 'text-green-500' : 'text-red-500'} text-[10px] font-medium`}
+          className={`${product?.quantity > 0 ? 'text-green-500' : 'text-red-500'} text-[10px] font-medium`}
         >
-          {product.quantity > 0 ? 'В наличии' : 'Товар закончился'}
+          {product?.quantity > 0 ? 'В наличии' : 'Товар закончился'}
         </span>
         <FavButton />
       </div>
       <div className='flex flex-col gap-2 bg-white px-2.5 pb-2.5'>
-        <Link href='/product/1'>
+        <Link href={`/product/${product?.id}`}>
           <h4 className='line-clamp-2 text-sm font-medium text-blue'>
-            {product.name}
+            {product?.name}
           </h4>
         </Link>
-        <p className='text-xs font-medium text-blue/65'>{product.brand.name}</p>
-        <CartButton price={product.price} />
+        <p className='text-xs font-medium text-blue/65'>
+          {product?.brand.name}
+        </p>
+        <CartButton price={product?.price} />
       </div>
     </div>
   );
