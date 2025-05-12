@@ -3,13 +3,29 @@ import { CustomTitle } from '@/components/ui/custom-title';
 import { Icon } from '@/components/shared/icon';
 import Link from 'next/link';
 import { useUserStore } from '@/store/user';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 export const ProfileInfo = () => {
   const user = useUserStore((state) => state.user);
+  const logout = useUserStore((state) => state.logout);
+  const router = useRouter();
 
   return (
     <div className='flex flex-col gap-4 md:gap-5'>
-      <CustomTitle title='Профиль' />
+      <div className='flex items-center justify-between gap-5'>
+        <CustomTitle title='Профиль' />
+        <Button
+          onClick={() => {
+            logout();
+            router.push('/');
+          }}
+          size='sm'
+          variant='destructive'
+        >
+          Выйти
+        </Button>
+      </div>
       <div className='flex flex-wrap items-center justify-between gap-5 rounded-2xl px-5 py-4 shadow-custom'>
         <div className='flex items-center gap-1.5 font-semibold text-blue'>
           <Icon name='shared/user' />
