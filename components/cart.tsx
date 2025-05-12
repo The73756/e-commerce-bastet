@@ -1,22 +1,49 @@
 import { CustomTitle } from '@/components/ui/custom-title';
-import Link from 'next/link';
 import { useBasketStore } from '@/store/basket';
 import { CartItem } from '@/components/cart-item';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { formatPrice } from '@/lib/format-price';
 
 export const Cart = () => {
   const basketItems = useBasketStore((state) => state.items);
 
   return (
-    <div className='h-full overflow-y-auto pr-3'>
+    <div className='relative flex h-full flex-col overflow-y-auto pr-3'>
       <CustomTitle
         className='mb-5'
         title={<Link href='/'>Корзина</Link>}
         desc={`${basketItems?.length} товаров`}
       />
-      <div className='flex flex-col gap-5'>
-        {basketItems.length > 0 &&
-          basketItems.map((item) => <CartItem key={item.id} item={item} />)}
-      </div>
+      {basketItems.length === 0 && (
+        <p className='absolute top-1/2 w-full text-center text-sm font-semibold text-grey'>
+          Добавьте товары для покупки
+        </p>
+      )}
+      {basketItems.length > 0 && (
+        <>
+          <div className='flex flex-col gap-5'>
+            {basketItems.map((item) => (
+              <CartItem key={item.id} item={item} />
+            ))}
+          </div>
+          <div className='mt-auto'>
+            <div className='mt-5 flex items-baseline gap-5'>
+              <h4 className='text-sm font-bold text-text-dark'>Итого</h4>
+              <p className='font-bold text-blue'>
+                {formatPrice(
+                  basketItems.reduce((sum, item) => {
+                    return sum + item.product.price * item.count;
+                  }, 0),
+                )}
+              </p>
+            </div>
+            <Button size='lg' className='mt-2 h-[40px] w-full py-2.5'>
+              Заказать
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
