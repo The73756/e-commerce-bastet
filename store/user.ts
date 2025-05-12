@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { User } from '@/types/user';
 import { apiInstance } from '@/api/api-instance';
-import { setCookie } from '@/lib/cookie';
+import { deleteCookie, setCookie } from '@/lib/cookie';
 
 interface UserStore {
   user: User | null;
@@ -26,7 +26,7 @@ interface UserStore {
 
 export const useUserStore = create<UserStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       user: null,
       isAuth: false,
       isLoading: false,
@@ -86,78 +86,88 @@ export const useUserStore = create<UserStore>()(
       },
 
       checkAuth: async () => {
-        // set({ isLoading: true });
-        // try {
-        //   const { token } = get();
-        //   if (!token) throw new Error('No token');
-        //
-        //   const response = await fetch('/api/user/check', {
-        //     headers: { Authorization: `Bearer ${token}` },
-        //   });
-        //
-        //   if (!response.ok) throw new Error('Not authorized');
-        //
-        //   const { token: newToken, user }: AuthResponse = await response.json();
-        //   set({ user, isAuth: true, token: newToken });
-        // } catch (err) {
-        //   set({ user: null, isAuth: false, token: null });
-        // } finally {
-        //   set({ isLoading: false });
-        // }
+        try {
+          set({ isLoading: true, error: null });
+
+          const { success, data, error } = await apiInstance<{
+            token: string;
+            user: User;
+          }>('/user/auth', {
+            method: 'GET',
+          });
+
+          if (success && data) {
+            set({ user: data.user, isAuth: true });
+            await setCookie('token', data.token);
+          }
+          if (error) {
+            set({
+              error: error.message,
+            });
+          }
+        } catch (err) {
+          set({ error: err instanceof Error ? err.message : 'failed' });
+        } finally {
+          set({ isLoading: false });
+        }
       },
 
-      logout: () => {
-        // set({ user: null, isAuth: false, token: null });
+      logout: async () => {
+        set({ user: null, isAuth: false });
+        await deleteCookie('token');
       },
 
       updateUser: async (id, updateData) => {
-        // set({ isLoading: true, error: null });
-        // try {
-        //   const { token } = get();
-        //   const response = await fetch(`/api/user/${id}`, {
-        //     method: 'PATCH',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       Authorization: `Bearer ${token}`,
-        //     },
-        //     body: JSON.stringify(updateData),
-        //   });
-        //
-        //   if (!response.ok) {
-        //     const errorData = await response.json();
-        //     throw new Error(errorData.message || 'Update failed');
-        //   }
-        //
-        //   const { token: newToken, user }: AuthResponse = await response.json();
-        //   set({ user, token: newToken });
-        // } catch (err) {
-        //   set({ error: err instanceof Error ? err.message : 'Update error' });
-        // } finally {
-        //   set({ isLoading: false });
-        // }
+        try {
+          set({ isLoading: true, error: null });
+          const { success, data, error } = await apiInstance<{
+            token: string;
+            user: User;
+          }>(`/user/${id}`, {
+            method: 'PATCH',
+            body: updateData,
+          });
+          if (success && data) {
+            set({ user: data.user, isAuth: true });
+            await setCookie('token', data.token);
+          }
+          if (error) {
+            set({
+              error: error.message,
+            });
+          }
+        } catch (err) {
+          set({ error: err instanceof Error ? err.message : 'failed' });
+        } finally {
+          set({ isLoading: false });
+        }
       },
 
-      // Удаление аккаунта
       deleteUser: async (id) => {
-        // set({ isLoading: true, error: null });
-        // try {
-        //   const { token } = get();
-        //   const response = await fetch(`/api/user/${id}`, {
-        //     method: 'DELETE',
-        //     headers: { Authorization: `Bearer ${token}` },
-        //   });
-        //
-        //   if (!response.ok) throw new Error('Delete failed');
-        //
-        //   set({ user: null, isAuth: false, token: null });
-        // } catch (err) {
-        //   set({ error: err instanceof Error ? err.message : 'Delete error' });
-        // } finally {
-        //   set({ isLoading: false });
-        // }
+        try {
+          set({ isLoading: true, error: null });
+          const { success, error } = await apiInstance<{
+            token: string;
+            user: User;
+          }>(`/user/${id}`, {
+            method: 'DELETE',
+          });
+          if (success) {
+            set({ user: null, isAuth: false });
+            await deleteCookie('token');
+          }
+          if (error) {
+            set({
+              error: error.message,
+            });
+          }
+        } catch (err) {
+          set({ error: err instanceof Error ? err.message : 'failed' });
+        } finally {
+          set({ isLoading: false });
+        }
       },
 
-      // Вспомогательные методы
       setLoading: (isLoading) => set({ isLoading }),
       setError: (error) => set({ error }),
       clearError: () => set({ error: null }),
