@@ -7,9 +7,11 @@ import { Input } from '@/components/ui/input';
 import { CustomModal } from '@/components/ui/custom-modal';
 import { LoginForm } from '@/components/login-form';
 import { useState } from 'react';
+import { useUserStore } from '@/store/user';
 
 export const Header = () => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
+  const user = useUserStore((state) => state.user);
 
   return (
     <header className='py-5.5 sticky top-0 z-10 mx-2.5 flex justify-between gap-x-24 gap-y-6 rounded-b-2xl bg-white px-4 py-6 max-md:flex-col md:items-center'>
@@ -29,25 +31,44 @@ export const Header = () => {
         </label>
         <nav>
           <ul className='flex items-center justify-between gap-2.5'>
-            <li className='md:hidden'>
-              <Button size='icon' className='h-10 w-10' asChild>
-                <Link href=''>
-                  <Icon name='shared/cart' />
-                </Link>
-              </Button>
-            </li>
-            <li>
-              <CustomModal
-                open={openLoginModal}
-                setOpen={setOpenLoginModal}
-                trigger={
-                  <Button size='lg' className='h-10 py-2.5 lg:w-[194px]'>
-                    Войти
+            {user && (
+              <>
+                <li className='md:hidden'>
+                  <Button size='icon' className='h-10 w-10' asChild>
+                    <Link href='/profile'>
+                      <Icon name='shared/cart' />
+                    </Link>
                   </Button>
-                }
-                title='Авторизация'
-                content={<LoginForm setOpen={setOpenLoginModal} />}
-              />
+                </li>
+                <li className='md:hidden'>
+                  <Button size='icon' className='h-10 w-10' asChild>
+                    <Link href='/profile'>
+                      <Icon name='shared/favourite' />
+                    </Link>
+                  </Button>
+                </li>
+              </>
+            )}
+            <li>
+              {user ? (
+                <Button size='lg' className='h-10 py-2.5 lg:w-[194px]' asChild>
+                  <Link href='/profile'>
+                    {user.surname} {user.name}
+                  </Link>
+                </Button>
+              ) : (
+                <CustomModal
+                  open={openLoginModal}
+                  setOpen={setOpenLoginModal}
+                  trigger={
+                    <Button size='lg' className='h-10 py-2.5 lg:w-[194px]'>
+                      Войти
+                    </Button>
+                  }
+                  title='Авторизация'
+                  content={<LoginForm setOpen={setOpenLoginModal} />}
+                />
+              )}
             </li>
           </ul>
         </nav>

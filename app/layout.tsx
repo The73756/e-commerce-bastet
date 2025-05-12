@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { CatalogSidebar } from '@/components/catalog-sidebar';
 import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
 import { CartSidebar } from '@/components/cart-sidebar';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -38,6 +39,7 @@ export default function RootLayout({
             <CartSidebar />
           </SidebarInset>
         </SidebarProvider>
+        <Toaster />
       </body>
     </html>
   );
