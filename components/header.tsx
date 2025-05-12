@@ -8,9 +8,11 @@ import { CustomModal } from '@/components/ui/custom-modal';
 import { LoginForm } from '@/components/login-form';
 import { useState } from 'react';
 import { useUserStore } from '@/store/user';
+import { RegForm } from '@/components/reg-form';
 
 export const Header = () => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openRegModal, setOpenRegModal] = useState(false);
   const user = useUserStore((state) => state.user);
 
   return (
@@ -30,7 +32,7 @@ export const Header = () => {
           />
         </label>
         <nav>
-          <ul className='flex items-center justify-between gap-2.5'>
+          <ul className='flex items-center justify-between gap-2.5 max-xs:flex-wrap max-xs:justify-start'>
             {user && (
               <>
                 <li className='md:hidden'>
@@ -51,23 +53,50 @@ export const Header = () => {
             )}
             <li>
               {user ? (
-                <Button size='lg' className='h-10 py-2.5 lg:w-[194px]' asChild>
+                <Button
+                  size='lg'
+                  className='h-10 px-2 py-2.5 lg:w-[194px]'
+                  asChild
+                >
                   <Link href='/profile'>
-                    {user.surname} {user.name}
+                    <span className='truncate'>
+                      {user.surname} {user.name}
+                    </span>
                   </Link>
                 </Button>
               ) : (
-                <CustomModal
-                  open={openLoginModal}
-                  setOpen={setOpenLoginModal}
-                  trigger={
-                    <Button size='lg' className='h-10 py-2.5 lg:w-[194px]'>
-                      Войти
-                    </Button>
-                  }
-                  title='Авторизация'
-                  content={<LoginForm setOpen={setOpenLoginModal} />}
-                />
+                <>
+                  <CustomModal
+                    open={openLoginModal}
+                    setOpen={setOpenLoginModal}
+                    trigger={
+                      <Button size='lg' className='h-10 py-2.5 lg:w-[194px]'>
+                        Войти
+                      </Button>
+                    }
+                    title='Авторизация'
+                    content={
+                      <LoginForm
+                        setOpenRegModal={setOpenRegModal}
+                        setOpenLoginModal={setOpenLoginModal}
+                      />
+                    }
+                  />
+                  <CustomModal
+                    open={openRegModal}
+                    setOpen={setOpenRegModal}
+                    trigger={
+                      <Button className='hidden'>Зарегистрироваться</Button>
+                    }
+                    title='Регистрация'
+                    content={
+                      <RegForm
+                        setOpenRegModal={setOpenRegModal}
+                        setOpenLoginModal={setOpenLoginModal}
+                      />
+                    }
+                  />
+                </>
               )}
             </li>
           </ul>
