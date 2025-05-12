@@ -1,3 +1,5 @@
+import { User } from '@/types/user';
+
 export type Product = {
   id: number;
   name: string;
@@ -32,6 +34,8 @@ export type Rating = {
   productId: number;
   createdAt?: Date;
   updatedAt?: Date;
+
+  user: User;
 };
 
 export type ProductInfo = {

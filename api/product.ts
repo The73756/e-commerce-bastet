@@ -1,5 +1,5 @@
 import { apiInstance } from '@/api/api-instance';
-import { ProductResponse } from '@/store/product';
+import { ProductResponse, SingleProductResponse } from '@/store/product';
 
 export const getAllProducts = async (params = {}) => {
   const queryString = Object.entries(params)
@@ -15,4 +15,10 @@ export const getAllProducts = async (params = {}) => {
       method: 'GET',
     },
   );
+};
+
+export const getOneProduct = async (id: string) => {
+  return await apiInstance<SingleProductResponse>(`/product/${id}`, {
+    method: 'GET',
+  });
 };

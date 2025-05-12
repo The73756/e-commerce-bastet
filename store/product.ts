@@ -7,7 +7,7 @@ export interface ProductResponse {
   count: number;
 }
 
-interface SingleProductResponse extends Product {
+export interface SingleProductResponse extends Product {
   info: ProductInfo[];
   ratings: Rating[];
 }
