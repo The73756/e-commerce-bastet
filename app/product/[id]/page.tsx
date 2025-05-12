@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         )}
       </div>
-      {productResponse.data && (
+      {productResponse.data && productResponse.data?.ratings.length > 0 && (
         <ProductReviewList
           totalRating={productResponse.data?.rating}
           ratings={productResponse.data?.ratings}

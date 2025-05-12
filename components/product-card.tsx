@@ -48,7 +48,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
         <p className='text-xs font-medium text-blue/65'>
           {product?.brand.name}
         </p>
-        <CartButton disabled={!product?.quantity} price={product?.price} />
+        <CartButton disabled={!product?.quantity} product={product} />
       </div>
     </div>
   );

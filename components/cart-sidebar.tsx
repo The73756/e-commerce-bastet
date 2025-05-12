@@ -1,24 +1,38 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { CustomTitle } from '@/components/ui/custom-title';
 import { useUserStore } from '@/store/user';
+import { BasketProduct } from '@/types/basket';
+import { useBasketStore } from '@/store/basket';
+import { useEffect } from 'react';
+import { Cart } from '@/components/cart';
 
-export function CartSidebar() {
+export function CartSidebar({
+  basket,
+  basketId,
+}: {
+  basket: BasketProduct[] | null | undefined;
+  basketId: number | undefined;
+}) {
   const isAuth = useUserStore((state) => state.isAuth);
+  const setBasketItems = useBasketStore((state) => state.setBasketItems);
+  const setCurrentBasketId = useBasketStore(
+    (state) => state.setCurrentBasketId,
+  );
+
+  useEffect(() => {
+    if (basket) setBasketItems(basket);
+    if (basketId) setCurrentBasketId(basketId);
+  }, [basket, basketId, setBasketItems, setCurrentBasketId]);
 
   return (
     <div
       id='basket'
       className='fixed bottom-0 right-0 top-[88px] z-10 w-[228px] p-2 max-md:hidden'
     >
-      <div className='relative h-full overflow-hidden rounded-2xl bg-white p-4'>
+      <div className='relative h-full overflow-hidden rounded-2xl bg-white p-4 pr-1'>
         {isAuth ? (
-          <CustomTitle
-            className='mb-5'
-            title={<Link href='/'>Корзина</Link>}
-            desc={`5 товаров`}
-          />
+          <Cart />
         ) : (
           <div className='flex h-full items-center justify-center'>
             <div className='absolute top-0 w-full rounded-2xl p-4 text-base font-semibold text-blue shadow-custom'>

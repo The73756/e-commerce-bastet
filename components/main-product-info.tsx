@@ -32,7 +32,7 @@ export const MainProductInfo = ({
           </div>
           <FavButton />
         </div>
-        <CartButton price={product.price} className='xs:max-w-[160px]' />
+        <CartButton product={product} className='xs:max-w-[160px]' />
       </div>
       <p className='max-w-[560px] text-sm text-text-dark'>
         {product.description}

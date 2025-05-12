@@ -1,3 +1,5 @@
+import { Product } from '@/types/product';
+
 export type Basket = {
   id: number;
   userId: number;
@@ -12,4 +14,6 @@ export type BasketProduct = {
   count: number;
   createdAt?: Date;
   updatedAt?: Date;
+
+  product: Product;
 };
