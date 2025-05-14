@@ -16,7 +16,7 @@ interface BasketStore {
   ) => Promise<ApiReturn<{ message: string }>>;
   getBasketItems: (basketId: number) => Promise<ApiReturn<BasketProduct[]>>;
   removeFromBasket: (id: number) => Promise<ApiReturn<{ message: string }>>;
-  clearBasket: () => void;
+  clearBasket: () => Promise<ApiReturn<{ message: string }>>;
   setBasketItems: (products: BasketProduct[]) => void;
 
   setCurrentBasketId: (id: number) => void;
@@ -140,7 +140,26 @@ export const useBasketStore = create<BasketStore>()(
         return { success, error };
       },
 
-      clearBasket: () => set({ items: [] }),
+      clearBasket: async () => {
+        const { currentBasketId } = get();
+        set({ isLoading: true, error: null });
+
+        const { success, error } = await apiInstance<{ message: string }>(
+          `/basket/clear`,
+          {
+            method: 'POST',
+            body: { basketId: currentBasketId },
+          },
+        );
+
+        if (success) {
+          set({ items: [] });
+          return { success, data: { message: 'Корзина очищена' } };
+        }
+
+        set({ error: error?.message, isLoading: false });
+        return { success, error };
+      },
 
       setLoading: (isLoading) => set({ isLoading }),
       setError: (error) => set({ error }),

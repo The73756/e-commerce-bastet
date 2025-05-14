@@ -4,9 +4,18 @@ import { CartItem } from '@/components/cart-item';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/format-price';
+import { toast } from 'sonner';
 
 export const Cart = () => {
   const basketItems = useBasketStore((state) => state.items);
+  const clearBasket = useBasketStore((state) => state.clearBasket);
+
+  const handleClearBasket = async () => {
+    const { success, data } = await clearBasket();
+    if (success) {
+      toast(data?.message);
+    }
+  };
 
   return (
     <div className='relative flex h-full flex-col overflow-y-auto pr-3'>
@@ -38,7 +47,11 @@ export const Cart = () => {
                 )}
               </p>
             </div>
-            <Button size='lg' className='mt-2 h-[40px] w-full py-2.5'>
+            <Button
+              onClick={handleClearBasket}
+              size='lg'
+              className='mt-2 h-[40px] w-full py-2.5'
+            >
               Заказать
             </Button>
           </div>

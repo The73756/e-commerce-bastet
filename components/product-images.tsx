@@ -22,6 +22,7 @@ export const ProductImages = ({ images }: { images: ProductPhoto[] }) => {
           alt='Product'
           width={332}
           height={332}
+          className='h-full object-contain'
         />
       </div>
       <Carousel opts={{ align: 'start' }}>

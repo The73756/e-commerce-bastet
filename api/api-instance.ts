@@ -15,7 +15,7 @@ export interface ErrorType {
 
 export interface ApiReturn<T> {
   data: T | null;
-  error: ErrorType | null;
+  error?: ErrorType | null;
   success: boolean;
 }
 

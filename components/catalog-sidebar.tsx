@@ -35,7 +35,7 @@ export function CatalogSidebar() {
           <CustomTitle
             className='mb-5'
             title={<Link href='/catalog'>Каталог</Link>}
-            desc={`${items.length} категорий`}
+            desc={`${items.length} категория`}
           />
           <SidebarGroupContent>
             <SidebarMenu>

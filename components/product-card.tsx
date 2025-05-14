@@ -10,13 +10,13 @@ import { API_URL } from '@/lib/consts';
 export const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div className='relative overflow-hidden rounded-xl bg-white shadow-custom'>
-      <div className='relative flex min-h-[110px] items-center justify-center rounded-xl border-b border-slate-100 bg-white'>
+      <div className='relative flex max-h-[110px] min-h-[110px] items-center justify-center rounded-xl border-b border-slate-100 bg-white'>
         <Image
           src={`${API_URL?.replace('api/', '')}/${product?.photos[0].url}`}
           alt={product?.name}
           width={110}
           height={110}
-          className='h-full object-contain'
+          className='h-full max-h-[110px] object-contain'
         />
         {product?.tag && (
           <TagItem
