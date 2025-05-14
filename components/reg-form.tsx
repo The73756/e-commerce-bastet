@@ -16,14 +16,18 @@ import { useUserStore } from '@/store/user';
 import ReactInputMask from 'react-input-mask';
 
 const formSchema = z.object({
-  surname: z.string({
-    required_error: 'Поле обязательно для заполнения',
-    invalid_type_error: 'Поле обязательно для заполнения',
-  }),
-  name: z.string({
-    required_error: 'Поле обязательно для заполнения',
-    invalid_type_error: 'Поле обязательно для заполнения',
-  }),
+  surname: z
+    .string({
+      required_error: 'Поле обязательно для заполнения',
+      invalid_type_error: 'Поле обязательно для заполнения',
+    })
+    .min(1, 'Поле обязательно для заполнения'),
+  name: z
+    .string({
+      required_error: 'Поле обязательно для заполнения',
+      invalid_type_error: 'Поле обязательно для заполнения',
+    })
+    .min(1, 'Поле обязательно для заполнения'),
   email: z
     .string({
       required_error: 'Поле обязательно для заполнения',
