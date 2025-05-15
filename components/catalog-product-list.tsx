@@ -1,22 +1,15 @@
 'use client';
 
-import { ProductResponse, useProductStore } from '@/store/product';
+import { useProductStore } from '@/store/product';
 import { ProductCard } from '@/components/product-card';
 
-export const CatalogProductList = ({
-  productData,
-}: {
-  productData: ProductResponse;
-}) => {
-  const setProducts = useProductStore((state) => state.setProducts);
-  setProducts(productData.rows);
+export const CatalogProductList = () => {
+  const products = useProductStore((state) => state.products);
 
   return (
     <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5'>
-      {productData.rows.map((prod) => (
-        <>
-          <ProductCard key={prod.id} product={prod} />
-        </>
+      {products.map((prod) => (
+        <ProductCard key={prod.id} product={prod} />
       ))}
     </div>
   );

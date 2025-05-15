@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Sidebar,
   SidebarContent,
@@ -13,21 +15,33 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { CatalogTypesResponse } from '@/api/catalog';
+import { pluralize } from '@/lib/utils';
+import { useCatalogStore } from '@/store/catalog';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-const items = [
-  {
-    title: 'Смартфоны',
-  },
-];
+export function CatalogSidebar({
+  catalogTypesResponse,
+}: {
+  catalogTypesResponse?: CatalogTypesResponse | null;
+}) {
+  const router = useRouter();
+  const count = catalogTypesResponse?.count;
+  const types = catalogTypesResponse?.rows;
 
-const brands = [
-  { id: 1, name: 'Samsung' },
-  { id: 2, name: 'Apple' },
-  { id: 3, name: 'Asus' },
-  { id: 4, name: 'Xiaomi' },
-];
+  const selectedBrand = useCatalogStore((state) => state.selectedBrand);
 
-export function CatalogSidebar() {
+  const setCatalog = useCatalogStore((state) => state.setCatalogTypes);
+  const setSelectedBrand = useCatalogStore((state) => state.setSelectedBrand);
+
+  const handleChangeType = (id?: number) => {
+    setSelectedBrand(null);
+    router.push(`/catalog/${id}`);
+  };
+
+  useEffect(() => setCatalog(catalogTypesResponse), []);
+
   return (
     <Sidebar variant='inset' collapsible='offcanvas'>
       <SidebarContent className='h-full text-background'>
@@ -35,7 +49,7 @@ export function CatalogSidebar() {
           <CustomTitle
             className='mb-5'
             title={<Link href='/catalog'>Каталог</Link>}
-            desc={`${items.length} категория`}
+            desc={`${count} ${pluralize(count || 0, ['категория', 'категорий', 'категорий'])}`}
           />
           <SidebarGroupContent>
             <SidebarMenu>
@@ -44,24 +58,32 @@ export function CatalogSidebar() {
                 collapsible
                 className='flex flex-col gap-2.5 font-medium text-blue'
               >
-                {items.map((item) => (
-                  <AccordionItem key={item.title} value={item.title}>
-                    <AccordionTrigger className='p-0 text-base'>
-                      {item.title}
-                    </AccordionTrigger>
-                    <AccordionContent className='p-0'>
-                      <ul className='flex flex-col gap-1 pl-5 pt-1'>
-                        {brands.map((brand) => (
-                          <li key={brand.id}>
-                            <Link className='text-sm' href='/catalog'>
-                              {brand.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
+                {types &&
+                  types.map((item) => (
+                    <AccordionItem key={item.id} value={item.name}>
+                      <AccordionTrigger
+                        onClick={() => handleChangeType(item?.id)}
+                        className='p-0 text-base'
+                      >
+                        <div>{item.name}</div>
+                      </AccordionTrigger>
+                      <AccordionContent className='p-0'>
+                        <ul className='flex flex-col gap-1 pl-5 pt-1'>
+                          {item.brands.map((brand) => (
+                            <li key={brand.id}>
+                              <Link
+                                onClick={() => setSelectedBrand(brand)}
+                                className={`text-sm ${selectedBrand?.id === brand.id && 'font-bold underline'}`}
+                                href={`/catalog/${item.id}`}
+                              >
+                                {brand.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
               </Accordion>
             </SidebarMenu>
           </SidebarGroupContent>

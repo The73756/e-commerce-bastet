@@ -2,6 +2,12 @@ import { create } from 'zustand';
 import { apiInstance, ApiReturn } from '@/api/api-instance';
 import { Product, ProductInfo, Rating } from '@/types/product';
 
+export interface ProductGroup {
+  id: number;
+  name: string;
+  products: Product[];
+}
+
 export interface ProductResponse {
   rows: Product[];
   count: number;
@@ -14,17 +20,19 @@ export interface SingleProductResponse extends Product {
 
 interface ProductStore {
   products: Product[];
+  productGroups: ProductGroup[];
   currentProduct: SingleProductResponse | null;
   count: number;
   isLoading: boolean;
   error: string | null;
+  activeTypeId?: string | null;
 
   getAllProducts: (params?: {
-    brandId?: number;
-    typeId?: number;
+    brandId?: string | number | null;
+    typeId?: string | number | null;
     limit?: number;
     page?: number;
-    search?: string;
+    search?: string | null;
     sort?: string;
     order?: 'ASC' | 'DESC';
   }) => Promise<ApiReturn<ProductResponse>>;
@@ -32,18 +40,22 @@ interface ProductStore {
   setProducts: (products: Product[]) => void;
 
   getOneProduct: (id: number) => Promise<ApiReturn<SingleProductResponse>>;
+  setProductGroups: (products: ProductGroup[]) => void;
 
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
   clearError: () => void;
+  setActiveTypeId: (id?: string | null) => void;
 }
 
 export const useProductStore = create<ProductStore>()((set) => ({
   products: [],
+  productGroups: [],
   currentProduct: null,
   count: 0,
-  isLoading: false,
+  isLoading: true,
   error: null,
+  activeTypeId: null,
 
   getAllProducts: async (params = {}) => {
     set({ isLoading: true, error: null });
@@ -56,7 +68,7 @@ export const useProductStore = create<ProductStore>()((set) => ({
       }, new URLSearchParams());
 
     const { success, data, error } = await apiInstance<ProductResponse>(
-      `/product${queryString.toString()}`,
+      `/product?${queryString.toString()}`,
       {
         method: 'GET',
       },
@@ -100,7 +112,12 @@ export const useProductStore = create<ProductStore>()((set) => ({
     set({ products });
   },
 
+  setProductGroups: (productGroups: ProductGroup[]) => {
+    set({ productGroups });
+  },
+
   setLoading: (isLoading) => set({ isLoading }),
   setError: (error) => set({ error }),
   clearError: () => set({ error: null }),
+  setActiveTypeId: (activeTypeId?: string | null) => set({ activeTypeId }),
 }));

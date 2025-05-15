@@ -1,11 +1,10 @@
 import { Button } from '@/components/ui/button';
-import { CustomTitle } from '@/components/ui/custom-title';
 import Link from 'next/link';
-import { ProductList } from '@/components/product-list';
-import { getAllProducts } from '@/api/product';
+import { getProductGroups } from '@/api/product';
+import { ProductGroupWrapper } from '@/components/ui/product-group-wrapper';
 
 export default async function Home() {
-  const allProductResponse = await getAllProducts();
+  const groupsResponse = await getProductGroups();
 
   return (
     <div className='flex flex-col gap-5'>
@@ -24,14 +23,9 @@ export default async function Home() {
           </Button>
         </div>
       </div>
-      {[1, 2, 3, 4, 5].map((item) => (
-        <div key={item} className='flex flex-col gap-2.5'>
-          <CustomTitle title='Смартфоны' />
-          {allProductResponse.data && (
-            <ProductList productData={allProductResponse.data} />
-          )}
-        </div>
-      ))}
+      {groupsResponse.data && (
+        <ProductGroupWrapper groups={groupsResponse.data} />
+      )}
     </div>
   );
 }

@@ -1,20 +1,32 @@
+'use client';
+
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { BrandSchema, useCatalogStore } from '@/store/catalog';
 
-const brands = [
-  { id: 1, name: 'Samsung' },
-  { id: 2, name: 'Apple' },
-  { id: 3, name: 'Asus' },
-  { id: 4, name: 'Xiaomi' },
-];
+export const BrandFilter = ({ brands }: { brands?: BrandSchema[] }) => {
+  const selectedBrand = useCatalogStore((state) => state.selectedBrand);
+  const setSelectedBrand = useCatalogStore((state) => state.setSelectedBrand);
 
-export const BrandFilter = () => {
+  const handleUpdateBrand = async (newValue: string) => {
+    const brand = brands?.find((brand) => brand.name === newValue);
+    setSelectedBrand(brand);
+  };
+
   return (
-    <ToggleGroup type='multiple'>
-      {brands.map((brand) => (
-        <ToggleGroupItem key={brand.id} value={brand.name}>
-          {brand.name}
-        </ToggleGroupItem>
-      ))}
-    </ToggleGroup>
+    <>
+      {brands && (
+        <ToggleGroup
+          type={'single'}
+          onValueChange={handleUpdateBrand}
+          value={selectedBrand?.name}
+        >
+          {brands?.map((brand) => (
+            <ToggleGroupItem key={brand.id} value={brand.name}>
+              {brand.name}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      )}
+    </>
   );
 };

@@ -1,40 +1,39 @@
 'use client';
-// import {
-//   Pagination,
-//   PaginationContent,
-//   PaginationItem,
-//   PaginationLink,
-//   PaginationNext,
-//   PaginationPrevious,
-// } from '@/components/ui/pagination';
-import { BrandFilter } from '@/components/brand-filter';
-import { SortSelect } from '@/components/sort-select';
-import { CustomTitle } from '@/components/ui/custom-title';
-import { CatalogProductList } from '@/components/catalog-product-list';
-import { getAllProducts } from '@/api/product';
-import { useEffect } from 'react';
-import { useSortStore } from '@/store/sort';
-import { LoaderBlock } from '@/components/shared/loader-block';
-import { useProductStore } from '@/store/product';
 
-export default function Page() {
-  const setSort = useSortStore((state) => state.setSort);
+import { CatalogProductList } from '@/components/catalog-product-list';
+import { CatalogTitle } from '@/components/catalog-title';
+import { useProductStore } from '@/store/product';
+import { useEffect } from 'react';
+import { useCatalogStore } from '@/store/catalog';
+import { LoaderBlock } from '@/components/shared/loader-block';
+import { useSortStore } from '@/store/sort';
+
+export default function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
+
   const productsLoading = useProductStore((state) => state.isLoading);
+
+  const brand = useCatalogStore((state) => state.selectedBrand);
+
+  const getAllProducts = useProductStore((state) => state.getAllProducts);
+  const setActiveTypeId = useProductStore((state) => state.setActiveTypeId);
+  const setSort = useSortStore((state) => state.setSort);
 
   useEffect(() => {
     setSort(null);
-    getAllProducts();
-  }, []);
+    setActiveTypeId(id);
+    getAllProducts({
+      typeId: id,
+      brandId: brand?.id,
+    });
+  }, [brand]);
 
   return (
     <div className='flex flex-col gap-5'>
-      <CustomTitle title='Каталог' />
-      <SortSelect />
-      <BrandFilter />
+      <CatalogTitle typeId={id}></CatalogTitle>
       <CatalogProductList />
 
       {productsLoading && <LoaderBlock />}
-
       {/*<Pagination>*/}
       {/*  <PaginationContent>*/}
       {/*    <PaginationItem>*/}

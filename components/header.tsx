@@ -6,14 +6,57 @@ import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { CustomModal } from '@/components/ui/custom-modal';
 import { LoginForm } from '@/components/login-form';
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useUserStore } from '@/store/user';
 import { RegForm } from '@/components/reg-form';
+import { useSearchStore } from '@/store/search';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useDebounce } from '@/hooks/use-debounce';
 
 export const Header = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegModal, setOpenRegModal] = useState(false);
+  const [localSearch, setLocalSearch] = useState('');
+
   const user = useUserStore((state) => state.user);
+  const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
+
+  const search = (debouncedValue: string) => {
+    setSearchTerm(debouncedValue);
+    if (debouncedValue) {
+      router.replace('/search?search=' + debouncedValue);
+      return;
+    }
+
+    router.replace(pathname);
+  };
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    setLocalSearch(target.value);
+  };
+
+  const debouncedSearchTerm = useDebounce(localSearch, 500);
+
+  useEffect(() => {
+    search(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    setLocalSearch(searchParams.get('search') || '');
+    setSearchTerm(searchParams.get('search') || '');
+  }, []);
+
+  useEffect(() => {
+    if (pathname !== '/search') {
+      setLocalSearch('');
+      setSearchTerm('');
+    }
+  }, [pathname]);
 
   return (
     <header className='py-5.5 sticky top-0 z-10 mx-2.5 flex justify-between gap-x-24 gap-y-6 rounded-b-2xl bg-white px-4 py-6 max-md:flex-col md:items-center'>
@@ -23,6 +66,8 @@ export const Header = () => {
       <div className='flex flex-auto items-center gap-2.5 max-md:flex-wrap'>
         <label className='relative min-h-[40px] min-w-[200px] flex-1 lg:min-w-[500px]'>
           <Input
+            value={localSearch}
+            onChange={handleInput}
             placeholder='Поиск...'
             className='absolute inset-0 h-full pl-14'
           />

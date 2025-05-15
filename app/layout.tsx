@@ -11,6 +11,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { getBasketItems } from '@/api/basket';
 import { getCookie } from '@/lib/cookie';
 import { jwtDecode } from 'jwt-decode';
+import { getCatalogTypes } from '@/api/catalog';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -38,13 +39,14 @@ export default async function RootLayout({
   };
 
   const basketResponse = await getBasket();
+  const catalogTypesResponse = await getCatalogTypes();
 
   return (
     <html lang='ru'>
       <body className={`antialiased ${nunito.className} bg-blue`}>
         <Header />
         <SidebarProvider defaultOpen>
-          <CatalogSidebar />
+          <CatalogSidebar catalogTypesResponse={catalogTypesResponse.data} />
           <CustomSidebarTrigger className='fixed right-6 top-7 z-10 md:hidden' />
           <SidebarInset>
             <div className='flex-1 rounded-2xl bg-white p-4 max-md:mx-2.5 max-md:mt-2.5 max-md:max-w-full md:max-w-[calc(100vw-29rem-8px)]'>
