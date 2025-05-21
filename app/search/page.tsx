@@ -16,7 +16,6 @@ import { useSortStore } from '@/store/sort';
 import { useCatalogStore } from '@/store/catalog';
 import { useProductStore } from '@/store/product';
 import { useSearchStore } from '@/store/search';
-import { LoaderBlock } from '@/components/shared/loader-block';
 import Image from 'next/image';
 import { pluralize } from '@/lib/utils';
 
@@ -60,9 +59,8 @@ export default function Page() {
           <BrandFilter />
         </>
       )}
-      {products?.length && !productsLoading ? (
-        <CatalogProductList />
-      ) : (
+      <CatalogProductList />
+      {!productsLoading && products?.length === 0 && (
         <div className='my-auto flex flex-col items-center justify-center gap-2'>
           <CustomTitle
             className='items-center'
@@ -79,8 +77,6 @@ export default function Page() {
           />
         </div>
       )}
-
-      {productsLoading && <LoaderBlock />}
     </div>
   );
 }
