@@ -12,6 +12,7 @@ import { getBasketItems } from '@/api/basket';
 import { getCookie } from '@/lib/cookie';
 import { jwtDecode } from 'jwt-decode';
 import { getCatalogTypes } from '@/api/catalog';
+import { CheckUser } from '@/components/check-user';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -44,20 +45,26 @@ export default async function RootLayout({
   return (
     <html lang='ru'>
       <body className={`antialiased ${nunito.className} bg-blue`}>
-        <Header />
-        <SidebarProvider defaultOpen>
-          <CatalogSidebar catalogTypesResponse={catalogTypesResponse.data} />
-          <CustomSidebarTrigger className='fixed right-6 top-7 z-10 md:hidden' />
-          <SidebarInset>
-            <div className='flex-1 rounded-2xl bg-white p-4 max-md:mx-2.5 max-md:mt-2.5 max-md:max-w-full md:max-w-[calc(100vw-29rem-8px)]'>
-              {children}
-            </div>
-            <CartSidebar
-              basketId={basketResponse?.basketId}
-              basket={basketResponse?.response.data}
-            />
-          </SidebarInset>
-        </SidebarProvider>
+        <CheckUser>
+          <>
+            <Header />
+            <SidebarProvider defaultOpen>
+              <CatalogSidebar
+                catalogTypesResponse={catalogTypesResponse.data}
+              />
+              <CustomSidebarTrigger className='fixed right-6 top-7 z-10 md:hidden' />
+              <SidebarInset>
+                <div className='flex-1 rounded-2xl bg-white p-4 max-md:mx-2.5 max-md:mt-2.5 max-md:max-w-full md:max-w-[calc(100vw-29rem-8px)]'>
+                  {children}
+                </div>
+                <CartSidebar
+                  basketId={basketResponse?.basketId}
+                  basket={basketResponse?.response.data}
+                />
+              </SidebarInset>
+            </SidebarProvider>
+          </>
+        </CheckUser>
         <Toaster />
       </body>
     </html>
