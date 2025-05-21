@@ -5,13 +5,10 @@ import { CatalogTitle } from '@/components/catalog-title';
 import { useProductStore } from '@/store/product';
 import { useEffect } from 'react';
 import { useCatalogStore } from '@/store/catalog';
-import { LoaderBlock } from '@/components/shared/loader-block';
 import { useSortStore } from '@/store/sort';
 
 export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
-
-  const productsLoading = useProductStore((state) => state.isLoading);
 
   const brand = useCatalogStore((state) => state.selectedBrand);
 
@@ -30,10 +27,9 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className='flex flex-col gap-5'>
-      <CatalogTitle typeId={id}></CatalogTitle>
+      <CatalogTitle typeId={id} />
       <CatalogProductList />
 
-      {productsLoading && <LoaderBlock />}
       {/*<Pagination>*/}
       {/*  <PaginationContent>*/}
       {/*    <PaginationItem>*/}

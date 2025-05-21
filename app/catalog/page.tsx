@@ -11,18 +11,21 @@ import { BrandFilter } from '@/components/brand-filter';
 import { SortSelect } from '@/components/sort-select';
 import { CustomTitle } from '@/components/ui/custom-title';
 import { CatalogProductList } from '@/components/catalog-product-list';
-import { getAllProducts } from '@/api/product';
 import { useEffect } from 'react';
 import { useSortStore } from '@/store/sort';
-import { LoaderBlock } from '@/components/shared/loader-block';
 import { useProductStore } from '@/store/product';
+import { useCatalogStore } from '@/store/catalog';
 
 export default function Page() {
   const setSort = useSortStore((state) => state.setSort);
-  const productsLoading = useProductStore((state) => state.isLoading);
+  const getAllProducts = useProductStore((state) => state.getAllProducts);
+  const setSelectedBrand = useCatalogStore((state) => state.setSelectedBrand);
+  const setActiveTypeId = useProductStore((state) => state.setActiveTypeId);
 
   useEffect(() => {
     setSort(null);
+    setSelectedBrand(null);
+    setActiveTypeId(null);
     getAllProducts();
   }, []);
 
@@ -32,8 +35,6 @@ export default function Page() {
       <SortSelect />
       <BrandFilter />
       <CatalogProductList />
-
-      {productsLoading && <LoaderBlock />}
 
       {/*<Pagination>*/}
       {/*  <PaginationContent>*/}

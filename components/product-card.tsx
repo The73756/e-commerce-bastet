@@ -9,7 +9,7 @@ import { API_URL } from '@/lib/consts';
 
 export const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <div className='relative overflow-hidden rounded-xl bg-white shadow-custom'>
+    <div className='relative flex flex-col overflow-hidden rounded-xl bg-white shadow-custom'>
       <div className='relative flex max-h-[110px] min-h-[110px] items-center justify-center rounded-xl border-b border-slate-100 bg-white'>
         <Image
           src={`${API_URL?.replace('api/', '')}/${product?.photos[0].url}`}
@@ -39,7 +39,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
         </span>
         <FavButton />
       </div>
-      <div className='flex flex-col gap-2 bg-white px-2.5 pb-2.5'>
+      <div className='flex flex-1 flex-col gap-2 bg-white px-2.5 pb-2.5'>
         <Link href={`/product/${product?.id}`}>
           <h4 className='line-clamp-2 text-sm font-medium text-blue'>
             {product?.name}
@@ -48,7 +48,11 @@ export const ProductCard = ({ product }: { product: Product }) => {
         <p className='text-xs font-medium text-blue/65'>
           {product?.brand.name}
         </p>
-        <CartButton disabled={!product?.quantity} product={product} />
+        <CartButton
+          className='mt-auto'
+          disabled={!product?.quantity}
+          product={product}
+        />
       </div>
     </div>
   );

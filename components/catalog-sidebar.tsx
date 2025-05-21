@@ -27,7 +27,8 @@ export function CatalogSidebar({
   catalogTypesResponse?: CatalogTypesResponse | null;
 }) {
   const router = useRouter();
-  const count = catalogTypesResponse?.count;
+  // const count = catalogTypesResponse?.count;
+  const count = catalogTypesResponse?.rows.length;
   const types = catalogTypesResponse?.rows;
 
   const selectedBrand = useCatalogStore((state) => state.selectedBrand);
@@ -49,7 +50,7 @@ export function CatalogSidebar({
           <CustomTitle
             className='mb-5'
             title={<Link href='/catalog'>Каталог</Link>}
-            desc={`${count} ${pluralize(count || 0, ['категория', 'категорий', 'категорий'])}`}
+            desc={`${count} ${pluralize(count || 0, ['категория', 'категории', 'категорий'])}`}
           />
           <SidebarGroupContent>
             <SidebarMenu>
