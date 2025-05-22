@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import ReactInputMask from 'react-input-mask';
 import { OrderType } from '@/types/order';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
   street: z
@@ -29,10 +30,12 @@ const formSchema = z.object({
       invalid_type_error: 'Поле обязательно для заполнения',
     })
     .min(1, 'Поле обязательно для заполнения'),
-  appartament: z.string({
-    required_error: 'Поле обязательно для заполнения',
-    invalid_type_error: 'Поле обязательно для заполнения',
-  }),
+  appartament: z
+    .string({
+      required_error: 'Поле обязательно для заполнения',
+      invalid_type_error: 'Поле обязательно для заполнения',
+    })
+    .min(1, 'Поле обязательно для заполнения'),
   intercom: z.boolean(),
   phone: z
     .string()
@@ -41,8 +44,16 @@ const formSchema = z.object({
       message: 'Введите корректный номер (+7 XXX XXX-XX-XX)',
     }),
   comment: z.string(),
-  date: z.coerce.date(),
-  time: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
+  date: z.coerce.date({
+    required_error: 'Поле обязательно для заполнения',
+    invalid_type_error: 'Поле обязательно для заполнения',
+  }),
+  time: z
+    .string({
+      required_error: 'Поле обязательно для заполнения',
+      invalid_type_error: 'Поле обязательно для заполнения',
+    })
+    .regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
 });
 
 export function CreateDeliveryOrderForm({
@@ -61,12 +72,14 @@ export function CreateDeliveryOrderForm({
       intercom: false,
       phone: '',
       comment: '',
+      time: '',
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log('create-delivery-order-form [onSubmit]', values);
     // values.phone = values.phone.replace(/(?!^\+)\D/g, '');
+    //
     // const { success, data, error } = await registration(values);
     //
     // if (success && data) {
@@ -131,9 +144,9 @@ export function CreateDeliveryOrderForm({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className='relative h-full'>
+                  <div className='relative h-[45px]'>
                     <Checkbox
-                      className='absolute inset-0 h-full w-full rounded-2xl border border-grey bg-white'
+                      className='absolute inset-0 h-[45px] w-full rounded-2xl border border-grey bg-white'
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -172,7 +185,7 @@ export function CreateDeliveryOrderForm({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder='Дата' {...field} />
+                  <Input placeholder='Дата получения' type='date' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -184,13 +197,29 @@ export function CreateDeliveryOrderForm({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder='Время' {...field} />
+                  <Input placeholder='Время' type='time' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name='comment'
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Textarea
+                  placeholder='Комментарий к заказу'
+                  className='resize-none'
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className='mt-2.5 flex items-center justify-between'>
           <Button
             className='h-10 w-1/2 justify-center font-semibold'

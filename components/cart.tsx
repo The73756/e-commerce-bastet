@@ -29,7 +29,7 @@ export const Cart = () => {
   };
 
   return (
-    <div className='relative flex h-full flex-col overflow-y-auto pr-3'>
+    <div className='relative flex h-full flex-col overflow-y-auto overflow-x-hidden pr-3'>
       <CustomTitle
         className='mb-5'
         title={<Link href='/'>Корзина</Link>}
