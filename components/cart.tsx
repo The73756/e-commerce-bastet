@@ -1,3 +1,4 @@
+'use client';
 import { CustomTitle } from '@/components/ui/custom-title';
 import { useBasketStore } from '@/store/basket';
 import { CartItem } from '@/components/cart-item';
@@ -5,10 +6,20 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/format-price';
 import { toast } from 'sonner';
+import { CustomModal } from '@/components/ui/custom-modal';
+import { useEffect, useState } from 'react';
+import { CreateOrder } from '@/components/create-order';
+import { useOrderStore } from '@/store/order';
 
 export const Cart = () => {
   const basketItems = useBasketStore((state) => state.items);
   const clearBasket = useBasketStore((state) => state.clearBasket);
+  const getAllOrderTypes = useOrderStore((state) => state.getAllOrderTypes);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    getAllOrderTypes();
+  }, []);
 
   const handleClearBasket = async () => {
     const { success, data } = await clearBasket();
@@ -47,13 +58,17 @@ export const Cart = () => {
                 )}
               </p>
             </div>
-            <Button
-              onClick={handleClearBasket}
-              size='lg'
-              className='mt-2 h-[40px] w-full py-2.5'
-            >
-              Заказать
-            </Button>
+            <CustomModal
+              open={open}
+              setOpen={setOpen}
+              trigger={
+                <Button size='lg' className='mt-2 h-[40px] w-full py-2.5'>
+                  Заказать
+                </Button>
+              }
+              title='Оформление заказа'
+              content={<CreateOrder setOpen={setOpen} />}
+            />
           </div>
         </>
       )}
