@@ -1,3 +1,5 @@
+import { Product } from '@/types/product';
+
 export type OrderType = {
   id: number;
   name: string;
@@ -16,8 +18,8 @@ export type OrderStatus = {
 export type Order = {
   id: number;
   userId: number;
-  orderTypeId: number;
-  orderStatusId: number;
+  orderType: OrderType;
+  orderStatus: OrderStatus;
   status: string;
   price: number;
   street: string;
@@ -26,6 +28,9 @@ export type Order = {
   intercom: boolean;
   phone: string;
   comment: string;
+  products: OrderProduct[];
+  date: Date;
+  time: string;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -35,6 +40,7 @@ export type OrderProduct = {
   orderId: number;
   productId: number;
   count: number;
+  product: Product;
   createdAt?: Date;
   updatedAt?: Date;
 };

@@ -10,6 +10,7 @@ interface OrderStore {
   error: string | null;
 
   getAllOrderTypes: () => Promise<ApiReturn<OrderType[]>>;
+  getAllOrdersOfUser: (userId: number) => Promise<ApiReturn<Order[]>>;
   createOrder: (orderData: {
     userId: number;
     orderTypeId: number;
@@ -48,6 +49,28 @@ export const useOrderStore = create<OrderStore>()((set) => ({
     if (success && data) {
       set({
         orderTypes: data,
+        isLoading: false,
+      });
+      return { success, data, error };
+    }
+
+    set({ error: error?.message, isLoading: false });
+    return { success, data, error };
+  },
+
+  getAllOrdersOfUser: async (userId) => {
+    set({ isLoading: true, error: null });
+
+    const { success, data, error } = await apiInstance<Order[]>(
+      `/order/user-orders/${userId}`,
+      {
+        method: 'GET',
+      },
+    );
+
+    if (success && data) {
+      set({
+        orders: data,
         isLoading: false,
       });
       return { success, data, error };

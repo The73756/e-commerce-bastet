@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { formatPrice } from '@/lib/format-price';
 import { API_URL } from '@/lib/consts';
 import { CartButton } from '@/components/cart-button';
+import Link from 'next/link';
 
 export const CartItem = ({ item }: { item: BasketProduct }) => {
   return (
@@ -17,9 +18,12 @@ export const CartItem = ({ item }: { item: BasketProduct }) => {
             className='object-contain'
           />
         </div>
-        <div className='text-sm text-blue'>
+        <Link
+          className='text-sm text-blue'
+          href={`/product/${item.product?.id}`}
+        >
           <h5 className='line-clamp-1 font-medium'>{item.product.name}</h5>
-        </div>
+        </Link>
       </div>
       <div className='flex items-center gap-4'>
         <CartButton cart product={item.product} />

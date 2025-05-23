@@ -26,14 +26,14 @@ export const ProfileInfo = () => {
           Выйти
         </Button>
       </div>
-      <div className='flex flex-wrap items-center justify-between gap-5 rounded-2xl px-5 py-4 shadow-custom'>
+      <div className='flex justify-between gap-5 rounded-2xl px-5 py-4 shadow-custom max-xs:flex-col xs:flex-wrap xs:items-center'>
         <div className='flex items-center gap-1.5 font-semibold text-blue'>
           <Icon name='shared/user' />
           <h4 className='text-lg'>
             {user?.surname} {user?.name}
           </h4>
         </div>
-        <div className='flex flex-col items-end gap-2.5'>
+        <div className='flex flex-col gap-2.5 xs:items-end'>
           <Link
             href={`tel:${user?.phone}`}
             className='flex items-center gap-1.5 text-blue'
