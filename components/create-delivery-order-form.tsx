@@ -16,6 +16,10 @@ import ReactInputMask from 'react-input-mask';
 import { OrderType } from '@/types/order';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
+import { formatPrice } from '@/lib/format-price';
+import { useBasketStore } from '@/store/basket';
+import { useOrderStore } from '@/store/order';
+import { useUserStore } from '@/store/user';
 
 const formSchema = z.object({
   street: z
@@ -75,19 +79,42 @@ export function CreateDeliveryOrderForm({
       time: '',
     },
   });
+  const basketItems = useBasketStore((state) => state.items);
+  const createOrder = useOrderStore((state) => state.createOrder);
+  const user = useUserStore((state) => state.user);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log('create-delivery-order-form [onSubmit]', values);
-    // values.phone = values.phone.replace(/(?!^\+)\D/g, '');
-    //
-    // const { success, data, error } = await registration(values);
-    //
-    // if (success && data) {
-    //   setOpen(false);
-    //   form.reset();
-    //   toast(`Вы зарегистрировались как ${data.user.surname} ${data.user.name}`);
-    // }
-    // if (error) toast(error.message);
+    if (!user) return;
+
+    values.phone = values.phone.replace(/(?!^\+)\D/g, '');
+
+    const orderData = {
+      userId: user?.id,
+      orderTypeId: selectedOrderType.id,
+      orderStatusId: 1,
+      price:
+        basketItems.reduce((sum, item) => {
+          return sum + item.product.price * item.count;
+        }, 0) + selectedOrderType.price,
+      street: values.street,
+      house: values.house,
+      appartament: values.appartament,
+      intercom: values.intercom,
+      phone: values.phone,
+      comment: values.comment,
+      date: values.date,
+      time: values.time,
+      products: basketItems,
+    };
+
+    const { success, data, error } = await createOrder(orderData);
+
+    if (success && data) {
+      setOpen(false);
+      form.reset();
+      toast(`Заказ успешно создан`);
+    }
+    if (error) toast(error.message);
   }
 
   return (
@@ -221,6 +248,16 @@ export function CreateDeliveryOrderForm({
           )}
         />
         <div className='mt-2.5 flex items-center justify-between'>
+          <div className='flex items-baseline gap-5'>
+            <h4 className='text-sm font-bold text-text-dark'>Итого</h4>
+            <p className='font-bold text-blue'>
+              {formatPrice(
+                basketItems.reduce((sum, item) => {
+                  return sum + item.product.price * item.count;
+                }, 0) + selectedOrderType.price,
+              )}
+            </p>
+          </div>
           <Button
             className='h-10 w-1/2 justify-center font-semibold'
             type='submit'

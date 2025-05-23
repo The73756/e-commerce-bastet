@@ -1,19 +1,37 @@
 import { create } from 'zustand';
 import { apiInstance, ApiReturn } from '@/api/api-instance';
-import { OrderType } from '@/types/order';
+import { Order, OrderType } from '@/types/order';
+import { BasketProduct } from '@/types/basket';
 
 interface OrderStore {
   orderTypes: OrderType[] | null;
+  orders: Order[] | null;
   isLoading: boolean;
   error: string | null;
 
   getAllOrderTypes: () => Promise<ApiReturn<OrderType[]>>;
+  createOrder: (orderData: {
+    userId: number;
+    orderTypeId: number;
+    orderStatusId: number;
+    price: number;
+    street: string;
+    house: string;
+    appartament: string;
+    intercom: boolean;
+    phone: string;
+    comment: string;
+    date: Date;
+    time: string;
+    products: BasketProduct[];
+  }) => Promise<ApiReturn<Order>>;
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
 }
 
 export const useOrderStore = create<OrderStore>()((set) => ({
   orderTypes: null,
+  orders: null,
   isLoading: true,
   error: null,
 
@@ -32,6 +50,27 @@ export const useOrderStore = create<OrderStore>()((set) => ({
         orderTypes: data,
         isLoading: false,
       });
+      return { success, data, error };
+    }
+
+    set({ error: error?.message, isLoading: false });
+    return { success, data, error };
+  },
+
+  createOrder: async (orderData) => {
+    set({ isLoading: true, error: null });
+
+    const { success, data, error } = await apiInstance<Order>('/order', {
+      method: 'POST',
+      body: { ...orderData, products: JSON.stringify(orderData.products) },
+    });
+
+    if (success && data) {
+      set((state) => ({
+        orders: [...(state.orders || []), data],
+        isLoading: false,
+      }));
+
       return { success, data, error };
     }
 
