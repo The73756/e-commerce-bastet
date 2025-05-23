@@ -5,6 +5,7 @@ import { useOrderStore } from '@/store/order';
 import { OrderType } from '@/types/order';
 import { formatPrice } from '@/lib/format-price';
 import { CreateDeliveryOrderForm } from '@/components/create-delivery-order-form';
+import { CreateOrderForm } from '@/components/create-order-form';
 
 export function CreateOrder({ setOpen }: { setOpen: (open: boolean) => void }) {
   const orderTypes = useOrderStore((state) => state.orderTypes);
@@ -42,7 +43,9 @@ export function CreateOrder({ setOpen }: { setOpen: (open: boolean) => void }) {
           selectedOrderType={orderType}
         />
       ) : (
-        <div>dfg</div>
+        orderType && (
+          <CreateOrderForm setOpen={setOpen} selectedOrderType={orderType} />
+        )
       )}
     </div>
   );

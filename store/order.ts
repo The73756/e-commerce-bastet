@@ -20,7 +20,7 @@ interface OrderStore {
     appartament: string;
     intercom: boolean;
     phone: string;
-    comment: string;
+    comment?: string;
     date: Date;
     time: string;
     products: BasketProduct[];
