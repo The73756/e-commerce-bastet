@@ -52,7 +52,7 @@ export const ProductGroupWrapper = ({ groups }: { groups: ProductGroup[] }) => {
                   >
                     {product?.quantity > 0 ? 'В наличии' : 'Товар закончился'}
                   </span>
-                  <FavButton />
+                  <FavButton product={product} />
                 </div>
                 <div className='flex flex-1 flex-col gap-2 bg-white px-2.5 pb-2.5'>
                   <Link href={`/product/${product?.id}`}>

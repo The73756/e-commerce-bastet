@@ -2,31 +2,13 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useUserStore } from '@/store/user';
-import { BasketProduct } from '@/types/basket';
-import { useBasketStore } from '@/store/basket';
-import { useEffect } from 'react';
 import { Cart } from '@/components/cart';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLoadingStore } from '@/store/loading';
 
-export function CartSidebar({
-  basket,
-  basketId,
-}: {
-  basket: BasketProduct[] | null | undefined;
-  basketId: number | undefined;
-}) {
+export function CartSidebar() {
   const isAuth = useUserStore((state) => state.isAuth);
   const pageLoading = useLoadingStore((state) => state.loading);
-  const setBasketItems = useBasketStore((state) => state.setBasketItems);
-  const setCurrentBasketId = useBasketStore(
-    (state) => state.setCurrentBasketId,
-  );
-
-  useEffect(() => {
-    if (basket) setBasketItems(basket);
-    if (basketId) setCurrentBasketId(basketId);
-  }, [basket, basketId, setBasketItems, setCurrentBasketId]);
 
   return (
     <div

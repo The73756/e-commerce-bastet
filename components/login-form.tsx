@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useUserStore } from '@/store/user';
+import { useFavoriteStore } from '@/store/favorite';
+import { useBasketStore } from '@/store/basket';
 
 const formSchema = z.object({
   email: z
@@ -52,6 +54,8 @@ export function LoginForm({
     },
   });
   const login = useUserStore((state) => state.login);
+  const getFavoriteItems = useFavoriteStore((state) => state.getFavoriteItems);
+  const getBasketItems = useBasketStore((state) => state.getBasketItems);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { success, data, error } = await login(values);
@@ -60,6 +64,9 @@ export function LoginForm({
       setOpenLoginModal(false);
       form.reset();
       toast(`Вы авторизовались как ${data.user.surname} ${data.user.name}`);
+
+      await getFavoriteItems(data.user.id);
+      await getBasketItems(data.user.id);
     }
     if (error) toast(error.message);
   }

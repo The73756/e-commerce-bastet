@@ -23,6 +23,8 @@ interface BasketStore {
   setLoading: (isLoading: boolean) => void;
   setError: (error: string | null) => void;
   setCurrentBasket: (basketId: number) => void;
+
+  clearBasketOnLogout: () => void;
 }
 
 export const useBasketStore = create<BasketStore>()(
@@ -164,6 +166,8 @@ export const useBasketStore = create<BasketStore>()(
       setLoading: (isLoading) => set({ isLoading }),
       setError: (error) => set({ error }),
       setCurrentBasket: (basketId) => set({ currentBasketId: basketId }),
+
+      clearBasketOnLogout: () => set({ items: [], currentBasketId: null }),
     }),
     {
       name: 'basket-storage',

@@ -8,11 +8,9 @@ import { CatalogSidebar } from '@/components/catalog-sidebar';
 import { CustomSidebarTrigger } from '@/components/ui/custom-sidebar-trigger';
 import { CartSidebar } from '@/components/cart-sidebar';
 import { Toaster } from '@/components/ui/sonner';
-import { getBasketItems } from '@/api/basket';
-import { getCookie } from '@/lib/cookie';
-import { jwtDecode } from 'jwt-decode';
 import { getCatalogTypes } from '@/api/catalog';
 import { CheckUser } from '@/components/check-user';
+import { GetFavoriteAndBasket } from '@/components/get-favorite-and-basket';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -30,16 +28,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const getBasket = async () => {
-    const token = await getCookie('token');
-    if (token) {
-      const decodedToken = jwtDecode(token?.value);
-      const response = await getBasketItems(decodedToken?.id);
-      return { basketId: decodedToken?.id, response };
-    }
-  };
-
-  const basketResponse = await getBasket();
   const catalogTypesResponse = await getCatalogTypes();
 
   return (
@@ -47,6 +35,7 @@ export default async function RootLayout({
       <body className={`antialiased ${nunito.className} bg-blue`}>
         <CheckUser>
           <>
+            <GetFavoriteAndBasket />
             <Header />
             <SidebarProvider defaultOpen>
               <CatalogSidebar
@@ -57,10 +46,7 @@ export default async function RootLayout({
                 <div className='flex-1 rounded-2xl bg-white p-4 max-md:mx-2.5 max-md:mt-2.5 max-md:max-w-full md:max-w-[calc(100vw-29rem-8px)]'>
                   {children}
                 </div>
-                <CartSidebar
-                  basketId={basketResponse?.basketId}
-                  basket={basketResponse?.response.data}
-                />
+                <CartSidebar />
               </SidebarInset>
             </SidebarProvider>
           </>

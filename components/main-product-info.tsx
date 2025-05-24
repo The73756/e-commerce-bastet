@@ -30,7 +30,7 @@ export const MainProductInfo = ({
               {product.brand.name}
             </p>
           </div>
-          <FavButton />
+          <FavButton product={product} />
         </div>
         <CartButton product={product} className='xs:max-w-[160px]' />
       </div>

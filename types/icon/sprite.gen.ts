@@ -11,6 +11,7 @@ export interface SpritesMap {
     | 'complect pc'
     | 'down'
     | 'email'
+    | 'favourite-full'
     | 'favourite'
     | 'first'
     | 'geoloc'
@@ -105,6 +106,11 @@ export const SPRITES_META: {
         viewBox: '0 0 24 24',
         width: 24,
         height: 24,
+      },
+      'favourite-full': {
+        viewBox: '0 0 30 30',
+        width: 30,
+        height: 30,
       },
       favourite: {
         viewBox: '0 0 30 30',

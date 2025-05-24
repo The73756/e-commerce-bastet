@@ -5,10 +5,14 @@ import Link from 'next/link';
 import { useUserStore } from '@/store/user';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { useFavoriteStore } from '@/store/favorite';
+import { useBasketStore } from '@/store/basket';
 
 export const ProfileInfo = () => {
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
+  const logoutFav = useFavoriteStore((state) => state.clearFavorite);
+  const logoutBasket = useBasketStore((state) => state.clearBasketOnLogout);
   const router = useRouter();
 
   return (
@@ -18,6 +22,8 @@ export const ProfileInfo = () => {
         <Button
           onClick={() => {
             logout();
+            logoutFav();
+            logoutBasket();
             router.push('/');
           }}
           size='sm'
