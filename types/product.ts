@@ -32,6 +32,7 @@ export type Rating = {
   rate: number;
   comment: string;
   productId: number;
+  product: Product;
   createdAt?: Date;
   updatedAt?: Date;
 

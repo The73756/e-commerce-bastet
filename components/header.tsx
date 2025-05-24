@@ -90,14 +90,24 @@ export const Header = () => {
                 <>
                   <li className='md:hidden'>
                     <Button size='icon' className='h-10 w-10' asChild>
-                      <Link href='/profile'>
+                      <Link
+                        href={{
+                          pathname: '/profile',
+                          query: { tabs: 'cart' },
+                        }}
+                      >
                         <Icon name='shared/cart' />
                       </Link>
                     </Button>
                   </li>
                   <li className='md:hidden'>
                     <Button size='icon' className='h-10 w-10' asChild>
-                      <Link href='/profile'>
+                      <Link
+                        href={{
+                          pathname: '/profile',
+                          query: { tabs: 'favorite' },
+                        }}
+                      >
                         <Icon name='shared/favourite' />
                       </Link>
                     </Button>

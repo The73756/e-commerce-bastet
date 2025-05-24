@@ -3,12 +3,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { OrderList } from '@/components/order-list';
 import { ProductCard } from '@/components/product-card';
 import { useBasketStore } from '@/store/basket';
+import { useSearchParams } from 'next/navigation';
 
 export const ProfileTabs = () => {
   const basketItems = useBasketStore((state) => state.items);
 
+  const searchParams = useSearchParams();
+  const defaultTab = searchParams.get('tabs');
+
   return (
-    <Tabs defaultValue='orders' className='w-full'>
+    <Tabs defaultValue={defaultTab || 'orders'} className='w-full'>
       <TabsList className='gap-2.5'>
         <TabsTrigger value='orders'>Заказы</TabsTrigger>
         <TabsTrigger value='favorite'>Избранное</TabsTrigger>

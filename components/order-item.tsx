@@ -1,10 +1,14 @@
+'use client';
 import { formatPrice } from '@/lib/format-price';
 import { OrderProductItem } from '@/components/order-product-item';
 import { Order } from '@/types/order';
 import { formatDate } from '@/lib/format-date';
 import { pluralize } from '@/lib/utils';
+import { useReviewStore } from '@/store/review';
 
 export const OrderItem = ({ order }: { order: Order }) => {
+  const reviews = useReviewStore((state) => state.reviews);
+
   return (
     <div className='flex flex-col gap-5 rounded-2xl bg-white p-5 shadow-custom'>
       <div className='flex flex-wrap items-start justify-between gap-5'>
@@ -40,7 +44,14 @@ export const OrderItem = ({ order }: { order: Order }) => {
       </div>
       <div className='grid gap-5 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2'>
         {order.products.map((prod) => (
-          <OrderProductItem key={prod.id} item={prod} />
+          <OrderProductItem
+            key={prod.id}
+            item={prod}
+            canReview={
+              order.orderStatus.id === 4 &&
+              !reviews?.some((rev) => rev.product.id === prod.product.id)
+            }
+          />
         ))}
       </div>
       <div className='flex items-center gap-5 font-semibold text-blue'>
