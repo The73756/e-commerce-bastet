@@ -18,6 +18,7 @@ export const OrderProductItem = ({
   canReview: boolean;
 }) => {
   const [open, setOpen] = useState(false);
+  const [isForm, setIsForm] = useState(canReview);
 
   return (
     <div className='flex flex-col gap-2'>
@@ -41,7 +42,7 @@ export const OrderProductItem = ({
           </p>
         </div>
       </div>
-      {canReview && (
+      {isForm && (
         <CustomModal
           open={open}
           setOpen={setOpen}
@@ -52,7 +53,13 @@ export const OrderProductItem = ({
             </Button>
           }
           title={`Отзыв на товар ${item.product?.name}`}
-          content={<ReviewForm setOpen={setOpen} product={item.product} />}
+          content={
+            <ReviewForm
+              setOpen={setOpen}
+              setIsForm={setIsForm}
+              product={item.product}
+            />
+          }
         />
       )}
     </div>

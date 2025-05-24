@@ -49,7 +49,7 @@ export const OrderItem = ({ order }: { order: Order }) => {
             item={prod}
             canReview={
               order.orderStatus.id === 4 &&
-              !reviews?.some((rev) => rev.product.id === prod.product.id)
+              !reviews?.some((rev) => rev.productId === prod.product.id)
             }
           />
         ))}

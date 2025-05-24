@@ -31,9 +31,11 @@ const formSchema = z.object({
 
 export function ReviewForm({
   setOpen,
+  setIsForm,
   product,
 }: {
   setOpen: (open: boolean) => void;
+  setIsForm: (open: boolean) => void;
   product: Product;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -56,8 +58,9 @@ export function ReviewForm({
 
     if (success && data) {
       setOpen(false);
+      setIsForm(false);
       form.reset();
-      toast(`Отзыв будет опубликован в ближайшее время`);
+      toast(`Товар успешно оценен`);
     }
     if (error) toast(error.message);
   }
