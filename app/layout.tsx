@@ -19,7 +19,6 @@ export const metadata: Metadata = {
 
 const nunito = Nunito({
   subsets: ['cyrillic', 'latin'],
-  display: 'swap',
   preload: true,
 });
 
