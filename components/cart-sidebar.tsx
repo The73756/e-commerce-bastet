@@ -1,14 +1,19 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { useUserStore } from '@/store/user';
 import { Cart } from '@/components/cart';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLoadingStore } from '@/store/loading';
+import { CustomModal } from '@/components/ui/custom-modal';
+import { LoginForm } from '@/components/login-form';
+import { RegForm } from '@/components/reg-form';
+import { useState } from 'react';
 
 export function CartSidebar() {
   const isAuth = useUserStore((state) => state.isAuth);
   const pageLoading = useLoadingStore((state) => state.loading);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openRegModal, setOpenRegModal] = useState(false);
 
   return (
     <div
@@ -41,9 +46,38 @@ export function CartSidebar() {
               </p>
               <div className='absolute bottom-0 left-0 right-0 flex w-full flex-col gap-4 rounded-2xl p-4 text-sm font-semibold text-grey-dark shadow-custom'>
                 <h4>Войдите, чтобы положить товар в корзину</h4>
-                <Button size='lg' className='h-[40px] w-full py-2.5' asChild>
-                  <Link href=''>Войти</Link>
-                </Button>
+                <>
+                  <CustomModal
+                    open={openLoginModal}
+                    setOpen={setOpenLoginModal}
+                    trigger={
+                      <Button size='lg' className='h-[40px] w-full py-2.5'>
+                        Войти
+                      </Button>
+                    }
+                    title='Авторизация'
+                    content={
+                      <LoginForm
+                        setOpenRegModal={setOpenRegModal}
+                        setOpenLoginModal={setOpenLoginModal}
+                      />
+                    }
+                  />
+                  <CustomModal
+                    open={openRegModal}
+                    setOpen={setOpenRegModal}
+                    trigger={
+                      <Button className='hidden'>Зарегистрироваться</Button>
+                    }
+                    title='Регистрация'
+                    content={
+                      <RegForm
+                        setOpenRegModal={setOpenRegModal}
+                        setOpenLoginModal={setOpenLoginModal}
+                      />
+                    }
+                  />
+                </>
               </div>
             </div>
           )}

@@ -109,7 +109,15 @@
     @apply bg-background text-foreground;
   }
 
-  body[data-scroll-locked="1"] #basket {
-    margin-right: var(--removed-body-scroll-bar-size);
+  #basket {
+    left: calc(100% - 228px - var(--removed-body-scroll-bar-size));
   }
+
+  @media (pointer: coarse) {
+    #basket {
+      left: calc(100% - 244px);
+      width: 244px;
+    }
+  }
+
 }
