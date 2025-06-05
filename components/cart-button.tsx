@@ -85,7 +85,7 @@ export const CartButton = ({
         </div>
       ) : (
         <>
-          <span>{formatPrice(product.price)}</span>
+          <span>{formatPrice(product?.price)}</span>
           <Icon name='shared/cart' />
         </>
       )}

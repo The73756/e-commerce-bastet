@@ -12,7 +12,11 @@ export const ProductCard = ({ product }: { product: Product }) => {
     <div className='relative flex flex-col overflow-hidden rounded-xl bg-white shadow-custom'>
       <div className='relative flex max-h-[110px] min-h-[110px] items-center justify-center rounded-xl border-b border-slate-100 bg-white'>
         <Image
-          src={`${API_URL?.replace('api/', '')}/${product?.photos[0].url}`}
+          src={
+            product?.photos[0]?.url
+              ? `${API_URL?.replace('api/', '')}/${product?.photos[0]?.url}`
+              : '/placeholder.png'
+          }
           alt={product?.name}
           width={110}
           height={110}

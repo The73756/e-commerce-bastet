@@ -27,7 +27,11 @@ export const ProductGroupWrapper = ({ groups }: { groups: ProductGroup[] }) => {
               >
                 <div className='relative flex max-h-[110px] min-h-[110px] items-center justify-center rounded-xl border-b border-slate-100 bg-white'>
                   <Image
-                    src={`${API_URL?.replace('api/', '')}/${product?.photos[0].url}`}
+                    src={
+                      product?.photos[0]?.url
+                        ? `${API_URL?.replace('api/', '')}/${product?.photos[0]?.url}`
+                        : '/placeholder.png'
+                    }
                     alt={product?.name}
                     width={110}
                     height={110}

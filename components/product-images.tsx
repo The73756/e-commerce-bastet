@@ -18,7 +18,11 @@ export const ProductImages = ({ images }: { images: ProductPhoto[] }) => {
     <div className='flex flex-col gap-2.5'>
       <div className='flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-[#EDEDED] max-lg:max-h-[400px]'>
         <Image
-          src={`${API_URL?.replace('api/', '')}/${images[active].url}`}
+          src={
+            images[active]?.url
+              ? `${API_URL?.replace('api/', '')}/${images[active]?.url}`
+              : '/placeholder.png'
+          }
           alt='Product'
           width={332}
           height={332}
@@ -37,7 +41,11 @@ export const ProductImages = ({ images }: { images: ProductPhoto[] }) => {
                 className={`flex h-16 items-center justify-center overflow-hidden rounded-xl border border-[#EDEDED] sm:h-[79px]`}
               >
                 <Image
-                  src={`${API_URL?.replace('api/', '')}/${img.url}`}
+                  src={
+                    img?.url
+                      ? `${API_URL?.replace('api/', '')}/${img?.url}`
+                      : '/placeholder.png'
+                  }
                   alt={`Product ${img.productId}`}
                   width={79}
                   height={79}
