@@ -67,6 +67,10 @@ export const useProductStore = create<ProductStore>()((set) => ({
         return params;
       }, new URLSearchParams());
 
+    if (!params.hasOwnProperty('limit')) {
+      queryString.append('limit', '40');
+    }
+
     const { success, data, error } = await apiInstance<ProductResponse>(
       `/product?${queryString.toString()}`,
       {
