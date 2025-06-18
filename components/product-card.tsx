@@ -37,7 +37,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
       </div>
       <div className='flex items-center justify-between gap-2 px-2.5 pt-1.5'>
         <span
-          className={`${product?.quantity > 0 ? 'text-green-500' : 'text-red-500'} text-[10px] font-medium`}
+          className={`${product?.quantity > 0 ? 'text-green-700' : 'text-red-500'} text-[10px] font-medium`}
         >
           {product?.quantity > 0 ? 'В наличии' : 'Товар закончился'}
         </span>
@@ -49,7 +49,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
             {product?.name}
           </h4>
         </Link>
-        <p className='text-xs font-medium text-blue/65'>
+        <p className='text-xs font-medium text-blue/95'>
           {product?.brand.name}
         </p>
         <CartButton

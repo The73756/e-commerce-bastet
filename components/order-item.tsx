@@ -19,8 +19,8 @@ export const OrderItem = ({ order }: { order: Order }) => {
               от {formatDate(order?.createdAt)}
             </span>
           </h2>
-          <p className='text-sm font-semibold text-grey'>{`${order.products?.length} ${pluralize(order.products.length || 0, ['товар', 'товара', 'товаров'])}`}</p>
-          {order.orderType.id === 1 && (
+          <p className='text-sm font-semibold text-grey'>{`${order.products?.length} ${pluralize(order.products?.length || 0, ['товар', 'товара', 'товаров'])}`}</p>
+          {order?.orderType?.id === 1 && (
             <p className='mt-2 text-sm font-medium text-blue'>
               Дата и время доставки: {formatDate(order.date)}{' '}
               {order.time && order.time?.substring(0, 5)}

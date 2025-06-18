@@ -12,6 +12,7 @@ export function CustomSidebarTrigger({ className }: { className?: string }) {
       variant='ghost'
       className={className ? className : ''}
       onClick={toggleSidebar}
+      aria-label='Открыть каталог'
     >
       <Icon name='shared/menu' />
     </Button>

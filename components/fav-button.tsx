@@ -20,7 +20,7 @@ export const FavButton = ({ product }: { product: Product }) => {
       return await removeFromFavorite(currentItem.id);
     }
 
-    return await addToFavorite(product.id);
+    await addToFavorite(product.id);
   };
 
   return (
@@ -29,6 +29,7 @@ export const FavButton = ({ product }: { product: Product }) => {
       className='h-6 w-6 text-base text-red-500 transition-colors duration-300'
       size='icon'
       onClick={handler}
+      aria-label='Добавить в избранное'
     >
       {currentItem ? (
         <Icon name='shared/favourite-full' />

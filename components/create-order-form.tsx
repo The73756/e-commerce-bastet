@@ -18,6 +18,8 @@ export function CreateOrderForm({
   const createOrder = useOrderStore((state) => state.createOrder);
   const user = useUserStore((state) => state.user);
   const clearBasket = useBasketStore((state) => state.clearBasket);
+  const setOrders = useOrderStore((state) => state.setOrders);
+  const orders = useOrderStore((state) => state.orders);
 
   async function onSubmit() {
     if (!user) return;
@@ -45,6 +47,13 @@ export function CreateOrderForm({
     if (success && data) {
       await clearBasket();
       setOpen(false);
+
+      console.log(data);
+      if (orders) {
+        setOrders([...orders, data]);
+      } else {
+        setOrders([data]);
+      }
       toast(`Заказ успешно создан`);
     }
     if (error) toast(error.message);

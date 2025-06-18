@@ -83,6 +83,8 @@ export function CreateDeliveryOrderForm({
   const createOrder = useOrderStore((state) => state.createOrder);
   const user = useUserStore((state) => state.user);
   const clearBasket = useBasketStore((state) => state.clearBasket);
+  const setOrders = useOrderStore((state) => state.setOrders);
+  const orders = useOrderStore((state) => state.orders);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!user) return;
@@ -114,6 +116,12 @@ export function CreateDeliveryOrderForm({
       await clearBasket();
       setOpen(false);
       form.reset();
+
+      if (orders) {
+        setOrders([...orders, data]);
+      } else {
+        setOrders([data]);
+      }
       toast(`Заказ успешно создан`);
     }
     if (error) toast(error.message);

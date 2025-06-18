@@ -66,6 +66,7 @@ export const Header = () => {
       <Link href='/'>
         <Image width={120} height={40} alt='Логотип Bastet' src='/logo.svg' />
       </Link>
+      <h1 className='hidden'>Онлайн-магазин электроники Bastet</h1>
       <div className='flex flex-auto items-center gap-2.5 max-md:flex-wrap'>
         <label className='relative min-h-[40px] min-w-[200px] flex-1 lg:min-w-[500px]'>
           <Input

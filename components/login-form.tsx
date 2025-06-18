@@ -55,7 +55,13 @@ export function LoginForm({
   });
   const login = useUserStore((state) => state.login);
   const getFavoriteItems = useFavoriteStore((state) => state.getFavoriteItems);
+  const setCurrentFavoriteId = useFavoriteStore(
+    (state) => state.setCurrentFavoriteId,
+  );
   const getBasketItems = useBasketStore((state) => state.getBasketItems);
+  const setCurrentBasketId = useBasketStore(
+    (state) => state.setCurrentBasketId,
+  );
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { success, data, error } = await login(values);
@@ -64,6 +70,9 @@ export function LoginForm({
       setOpenLoginModal(false);
       form.reset();
       toast(`Вы авторизовались как ${data.user.surname} ${data.user.name}`);
+
+      setCurrentBasketId(data?.user?.id);
+      setCurrentFavoriteId(data?.user?.id);
 
       await getFavoriteItems(data.user.id);
       await getBasketItems(data.user.id);

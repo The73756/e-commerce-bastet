@@ -9,6 +9,7 @@ interface OrderStore {
   isLoading: boolean;
   error: string | null;
 
+  setOrders: (orders: Order[]) => void;
   getAllOrderTypes: () => Promise<ApiReturn<OrderType[]>>;
   getAllOrdersOfUser: (userId: number) => Promise<ApiReturn<Order[]>>;
   createOrder: (orderData: {
@@ -35,6 +36,12 @@ export const useOrderStore = create<OrderStore>()((set) => ({
   orders: null,
   isLoading: true,
   error: null,
+
+  setOrders: (orders: Order[]) => {
+    set({
+      orders: orders,
+    });
+  },
 
   getAllOrderTypes: async () => {
     set({ isLoading: true, error: null });

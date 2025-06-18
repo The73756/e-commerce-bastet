@@ -26,7 +26,7 @@ export const MainProductInfo = ({
             >
               {product?.quantity > 0 ? 'В наличии' : 'Товар закончился'}
             </span>
-            <p className='text-sm font-medium text-blue/65'>
+            <p className='text-sm font-medium text-blue/95'>
               {product.brand.name}
             </p>
           </div>

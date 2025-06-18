@@ -11,7 +11,7 @@ interface FavoriteStore {
 
   addToFavorite: (productId: number) => Promise<ApiReturn<FavoriteProduct>>;
   getFavoriteItems: (
-    favoriteId: number,
+    favoriteId: number
   ) => Promise<ApiReturn<FavoriteProduct[]>>;
   removeFromFavorite: (id: number) => Promise<ApiReturn<{ message: string }>>;
   setFavoriteItems: (products: FavoriteProduct[]) => void;
@@ -48,14 +48,16 @@ export const useFavoriteStore = create<FavoriteStore>()(
           '/favorite',
           {
             method: 'POST',
-            body: { productId, favoriteId: currentFavoriteId },
-          },
+            body: { productId, favoriteId: currentFavoriteId }
+          }
         );
+
+        console.log('favorite [addToFavorite]', data);
 
         if (success && data) {
           set((state) => ({
             items: [...state.items, data],
-            isLoading: false,
+            isLoading: false
           }));
           return { success, data, error };
         }
@@ -70,15 +72,15 @@ export const useFavoriteStore = create<FavoriteStore>()(
         const { success, data, error } = await apiInstance<FavoriteProduct[]>(
           `/favorite/${favoriteId}`,
           {
-            method: 'GET',
-          },
+            method: 'GET'
+          }
         );
 
         if (success && data) {
           set({
             items: data,
             currentFavoriteId: favoriteId,
-            isLoading: false,
+            isLoading: false
           });
           return { success, data, error };
         }
@@ -97,14 +99,14 @@ export const useFavoriteStore = create<FavoriteStore>()(
         const { success, error } = await apiInstance<{ message: string }>(
           `/favorite/${id}`,
           {
-            method: 'DELETE',
-          },
+            method: 'DELETE'
+          }
         );
 
         if (success) {
           set((state) => ({
             items: state.items.filter((item) => item.id !== id),
-            isLoading: false,
+            isLoading: false
           }));
           return { success, data: { message: 'Товар удален' }, error };
         }
@@ -116,14 +118,14 @@ export const useFavoriteStore = create<FavoriteStore>()(
       setLoading: (isLoading) => set({ isLoading }),
       setError: (error) => set({ error }),
 
-      clearFavorite: () => set({ items: [], currentFavoriteId: null }),
+      clearFavorite: () => set({ items: [], currentFavoriteId: null })
     }),
     {
       name: 'favorite-storage',
       partialize: (state) => ({
         items: state.items,
-        currentFavoriteId: state.currentFavoriteId,
-      }),
-    },
-  ),
+        currentFavoriteId: state.currentFavoriteId
+      })
+    }
+  )
 );

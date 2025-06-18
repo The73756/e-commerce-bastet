@@ -7,6 +7,8 @@ import { useRouter, usePathname } from 'next/navigation';
 import { toast } from 'sonner';
 import { AUTH_REQUIRED_PATHS, STAFF_ONLY_PATHS } from '@/lib/consts';
 import { useLoadingStore } from '@/store/loading';
+import { useFavoriteStore } from '@/store/favorite';
+import { useBasketStore } from '@/store/basket';
 
 interface Props {
   children: ReactNode;
@@ -16,6 +18,8 @@ export const CheckUser = ({ children }: Props) => {
   const user = useUserStore((state) => state.user);
   const checkUser = useUserStore((state) => state.checkAuth);
   const setPageLoading = useLoadingStore((state) => state.setLoading);
+  const getFavoriteItems = useFavoriteStore((state) => state.getFavoriteItems);
+  const getBasketItems = useBasketStore((state) => state.getBasketItems);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -37,12 +41,15 @@ export const CheckUser = ({ children }: Props) => {
       }
 
       if (token && !user) {
-        const { success } = await checkUser();
+        const { success, data } = await checkUser();
 
         if (!success) {
           router.push('/');
           toast('Авторизуйтесь для доступа к этой странице');
           return;
+        } else if (success && data) {
+          await getFavoriteItems(data?.user.id);
+          await getBasketItems(data?.user.id);
         }
       }
 
@@ -51,6 +58,9 @@ export const CheckUser = ({ children }: Props) => {
         if (success && data?.user.role !== 'ADMIN') {
           router.push('/');
           toast('У Вас нет прав администратора');
+        } else if (success && data) {
+          await getFavoriteItems(data?.user.id);
+          await getBasketItems(data?.user.id);
         }
         return;
       }

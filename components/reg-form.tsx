@@ -14,6 +14,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { useUserStore } from '@/store/user';
 import ReactInputMask from 'react-input-mask';
+import { useFavoriteStore } from '@/store/favorite';
+import { useBasketStore } from '@/store/basket';
 
 const formSchema = z.object({
   surname: z
@@ -73,6 +75,14 @@ export function RegForm({
     },
   });
   const registration = useUserStore((state) => state.registration);
+  const getFavoriteItems = useFavoriteStore((state) => state.getFavoriteItems);
+  const setCurrentFavoriteId = useFavoriteStore(
+    (state) => state.setCurrentFavoriteId,
+  );
+  const getBasketItems = useBasketStore((state) => state.getBasketItems);
+  const setCurrentBasketId = useBasketStore(
+    (state) => state.setCurrentBasketId,
+  );
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     values.phone = values.phone.replace(/(?!^\+)\D/g, '');
@@ -82,6 +92,12 @@ export function RegForm({
       setOpenRegModal(false);
       form.reset();
       toast(`Вы зарегистрировались как ${data.user.surname} ${data.user.name}`);
+
+      setCurrentBasketId(data?.user?.id);
+      setCurrentFavoriteId(data?.user?.id);
+
+      await getFavoriteItems(data.user.id);
+      await getBasketItems(data.user.id);
     }
     if (error) toast(error.message);
   }

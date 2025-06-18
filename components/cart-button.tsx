@@ -24,7 +24,7 @@ export const CartButton = ({
   const removeFromBasket = useBasketStore((state) => state.removeFromBasket);
 
   const currentItem = basketItems?.find(
-    (item) => item.productId === product.id,
+    (item) => item?.productId === product?.id,
   );
 
   const add = async () => {
@@ -36,7 +36,7 @@ export const CartButton = ({
   const increment = async () => {
     if (!currentItem) return;
 
-    await updateBasketItem(currentItem.id, currentItem.count + 1);
+    await updateBasketItem(currentItem?.id, currentItem?.count + 1);
   };
 
   const decrement = async () => {
@@ -44,7 +44,7 @@ export const CartButton = ({
 
     if (currentItem?.count === 1) return await removeFromBasket(currentItem.id);
 
-    await updateBasketItem(currentItem.id, currentItem.count - 1);
+    await updateBasketItem(currentItem?.id, currentItem?.count - 1);
   };
 
   return (
@@ -64,7 +64,7 @@ export const CartButton = ({
           ) : (
             <div className='flex h-6 flex-col items-center justify-center text-xs'>
               <span>
-                {formatPrice(product.price * (currentItem?.count || 1))}
+                {formatPrice(product?.price * (currentItem?.count || 1))}
               </span>
               <span className='text-[10px]'>{currentItem?.count} шт</span>
             </div>
@@ -72,10 +72,10 @@ export const CartButton = ({
 
           <button
             onClick={increment}
-            disabled={currentItem.count === product.quantity}
+            disabled={currentItem.count === product?.quantity}
             className='relative disabled:opacity-50'
           >
-            {currentItem.count === product.quantity && (
+            {currentItem.count === product?.quantity && (
               <span className='absolute -right-1 -top-6 text-[10px] text-text'>
                 Товар закончился
               </span>

@@ -13,39 +13,41 @@ export const ProfileTabs = () => {
   const searchParams = useSearchParams();
   const defaultTab = searchParams.get('tabs');
 
+  console.log('profile-tabs [ProfileTabs]', favoriteItems);
+
   return (
-    <Tabs defaultValue={defaultTab || 'orders'} className='w-full'>
-      <TabsList className='gap-2.5'>
-        <TabsTrigger value='orders'>Заказы</TabsTrigger>
-        <TabsTrigger value='favorite'>Избранное</TabsTrigger>
-        <TabsTrigger className='md:hidden' value='cart'>
+    <Tabs defaultValue={defaultTab || 'orders'} className="w-full">
+      <TabsList className="gap-2.5">
+        <TabsTrigger value="orders">Заказы</TabsTrigger>
+        <TabsTrigger value="favorite">Избранное</TabsTrigger>
+        <TabsTrigger className="md:hidden" value="cart">
           Корзина
         </TabsTrigger>
       </TabsList>
-      <TabsContent value='orders'>
+      <TabsContent value="orders">
         <OrderList />
       </TabsContent>
-      <TabsContent className='relative' value='favorite'>
-        <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5'>
+      <TabsContent className="relative" value="favorite">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5">
           {favoriteItems.length > 0 &&
             favoriteItems.map((prod) => (
               <ProductCard key={prod.id} product={prod.product} />
             ))}
           {favoriteItems.length === 0 && (
-            <p className='absolute top-1/2 mt-5 w-full text-center text-sm font-semibold text-grey'>
+            <p className="absolute top-1/2 mt-5 w-full text-center text-sm font-semibold text-grey">
               Вы еще не добавляли товары в избранное
             </p>
           )}
         </div>
       </TabsContent>
-      <TabsContent className='relative md:hidden' value='cart'>
-        <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5'>
+      <TabsContent className="relative md:hidden" value="cart">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5">
           {basketItems.length > 0 &&
             basketItems.map((prod) => (
               <ProductCard key={prod.id} product={prod.product} />
             ))}
           {basketItems.length === 0 && (
-            <p className='absolute top-1/2 mt-5 w-full text-center text-sm font-semibold text-grey'>
+            <p className="absolute top-1/2 mt-5 w-full text-center text-sm font-semibold text-grey">
               Добавьте товары для покупки
             </p>
           )}
