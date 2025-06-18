@@ -118,7 +118,7 @@ export function CreateDeliveryOrderForm({
       form.reset();
 
       if (orders) {
-        setOrders([...orders, data]);
+        setOrders([data, ...orders]);
       } else {
         setOrders([data]);
       }

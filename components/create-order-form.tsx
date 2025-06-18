@@ -50,7 +50,7 @@ export function CreateOrderForm({
 
       console.log(data);
       if (orders) {
-        setOrders([...orders, data]);
+        setOrders([data, ...orders]);
       } else {
         setOrders([data]);
       }
